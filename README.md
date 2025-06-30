@@ -38,8 +38,8 @@ tests/
 
 ## Status
 
-- [✓] Setup inicial
-- [✓] Modelos de domínio
+- [x] Setup inicial
+- [x] Modelos de domínio
 - [ ] Handlers e validações
 - [ ] Controllers e endpoints
 - [ ] Testes
