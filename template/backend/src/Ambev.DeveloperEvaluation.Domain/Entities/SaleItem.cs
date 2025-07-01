@@ -1,52 +1,50 @@
 using Ambev.DeveloperEvaluation.Domain.Common;
 
-namespace Ambev.DeveloperEvaluation.Domain.Entities
+namespace Ambev.DeveloperEvaluation.Domain.Entities;
+
+public class SaleItem : BaseEntity
 {
-    public class SaleItem : BaseEntity
+    public SaleItem()
     {
-        public Product Product { get; private set; }
-        public int Quantity { get; private set; }
-        public decimal UnitPrice { get; private set; }
-        public decimal Discount { get; private set; }
-        public decimal Total => CalculateTotal();
-        public bool IsCancelled { get; private set; }
+        this.Product = new();
+    }
 
-        public SaleItem(Product product, int quantity, decimal unitPrice)
+    public Product Product { get; set; }
+
+    public int Quantity { get; set; }
+
+    public decimal UnitPrice { get; set; }
+
+    public decimal Discount { get; set; }
+
+    public decimal Total => this.CalculateTotal();
+
+    public bool IsCancelled { get; set; }
+
+    public void ApplyDiscountRules()
+    {
+        this.Discount = this.Quantity switch
         {
-            if (quantity < 1)
-                throw new ArgumentException("Quantity must be at least 1.");
+            >= 10 => 0.20m,
+            >= 4 => 0.10m,
+            _ => 0.0m,
+        };
+    }
 
-            if (quantity > 20)
-                throw new ArgumentException("Cannot sell more than 20 items of the same product.");
-
-            Product = product ?? throw new ArgumentNullException(nameof(product));
-            Quantity = quantity;
-            UnitPrice = unitPrice;
-            Discount = CalculateDiscount(quantity);
-            Id = Guid.NewGuid();
+    public void Cancel()
+    {
+        if (this.IsCancelled)
+        {
+            throw new InvalidOperationException("Item is already cancelled.");
         }
 
-        private decimal CalculateDiscount(int quantity)
-        {
-            if (quantity >= 10)
-                return 0.20m;
-            if (quantity >= 4)
-                return 0.10m;
-            return 0.0m;
-        }
+        this.IsCancelled = true;
+    }
 
-        private decimal CalculateTotal()
-        {
-            var gross = Quantity * UnitPrice;
-            var discountAmount = gross * Discount;
-            return gross - discountAmount;
-        }
-
-        public void Cancel()
-        {
-            if (IsCancelled)
-                throw new InvalidOperationException("Item is already cancelled.");
-            IsCancelled = true;
-        }
+    private decimal CalculateTotal()
+    {
+        decimal gross = this.Quantity * this.UnitPrice;
+        decimal discountAmount = gross * this.Discount;
+        return gross - discountAmount;
     }
 }

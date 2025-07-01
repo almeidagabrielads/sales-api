@@ -18,6 +18,9 @@ dotnet_diagnostic.SA1003.severity = none
 # Relax file/type strictness but show as suggestion
 dotnet_diagnostic.SA1649.severity = suggestion
 dotnet_diagnostic.SA1402.severity = suggestion
+dotnet_diagnostic.SA1200.severity = suggestion
+dotnet_diagnostic.SA1633.severity = suggestion
+
 
 dotnet_diagnostic.CS1591.severity = suggestion
 dotnet_diagnostic.CS1574.severity = suggestion

@@ -1,21 +1,27 @@
+using Ambev.DeveloperEvaluation.Application.Validators;
+using Ambev.DeveloperEvaluation.Common.Validation;
 using Ambev.DeveloperEvaluation.Domain.Common;
 
 namespace Ambev.DeveloperEvaluation.Domain.Entities;
 
 public class Branch : BaseEntity
 {
+    public Branch()
+    {
+    }
+
     public string ExternalId { get; private set; } = string.Empty;
+
     public string Name { get; private set; } = string.Empty;
 
-    public Branch(string externalId, string name)
+    public ValidationResultDetail Validate()
     {
-        if (string.IsNullOrWhiteSpace(externalId))
-            throw new ArgumentException("ExternalId is required.");
-        if (string.IsNullOrWhiteSpace(name))
-            throw new ArgumentException("Name is required.");
-
-        Id = Guid.NewGuid();
-        ExternalId = externalId;
-        Name = name;
+        BranchValidator validator = new BranchValidator();
+        FluentValidation.Results.ValidationResult result = validator.Validate(this);
+        return new ValidationResultDetail
+        {
+            IsValid = result.IsValid,
+            Errors = result.Errors.Select(e => (ValidationErrorDetail)e),
+        };
     }
 }

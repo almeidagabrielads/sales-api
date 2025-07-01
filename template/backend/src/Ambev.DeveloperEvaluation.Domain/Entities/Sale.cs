@@ -1,73 +1,57 @@
+using Ambev.DeveloperEvaluation.Common.Validation;
 using Ambev.DeveloperEvaluation.Domain.Common;
+using Ambev.DeveloperEvaluation.Domain.Validation;
 
-namespace Ambev.DeveloperEvaluation.Domain.Entities
+namespace Ambev.DeveloperEvaluation.Domain.Entities;
+
+public class Sale : BaseEntity
 {
-
-    public class Sale : BaseEntity
+    public Sale()
     {
-        public string SaleNumber { get; private set; } = string.Empty;
-        public DateTime SoldAt { get; private set; }
-        public Customer Customer { get; private set; }
-        public Branch Branch { get; private set; }
-        public List<SaleItem> Items { get; private set; } = new();
-        public decimal TotalAmount => CalculateTotalAmount();
-        public bool IsCancelled { get; private set; }
+        this.CreatedAt = DateTime.UtcNow;
+        this.Items = new();
+        this.Customer = new();
+        this.Branch = new();
+    }
 
-        public List<string> DomainEvents { get; private set; } = new();
+    public string SaleNumber { get; set; } = string.Empty;
 
-        public Sale(string saleNumber, Customer customer, Branch branch, List<SaleItem> items)
+    public Customer Customer { get; set; }
+
+    public Branch Branch { get; set; }
+
+    public List<SaleItem> Items { get; set; }
+
+    public bool IsCancelled { get; set; }
+
+    public DateTime CreatedAt { get; set; }
+
+    public decimal TotalAmount { get; set; }
+
+    public void Cancel()
+    {
+        if (this.IsCancelled)
         {
-            Id = Guid.NewGuid();
-            SaleNumber = saleNumber;
-            SoldAt = DateTime.UtcNow;
-            Customer = customer ?? throw new ArgumentNullException(nameof(customer));
-            Branch = branch ?? throw new ArgumentNullException(nameof(branch));
-            Items = items ?? throw new ArgumentNullException(nameof(items));
-
-            ValidateItems();
+            throw new InvalidOperationException("Sale is already cancelled.");
         }
 
-        private void ValidateItems()
+        this.IsCancelled = true;
+        this.Items.ForEach(i => i.Cancel());
+    }
+
+    public void RecalculateTotal()
+    {
+        this.TotalAmount = this.Items?.Sum(i => i.Total) ?? 0m;
+    }
+
+    public ValidationResultDetail Validate()
+    {
+        SaleValidator validator = new SaleValidator();
+        FluentValidation.Results.ValidationResult result = validator.Validate(this);
+        return new ValidationResultDetail
         {
-            if (Items.Count == 0)
-                throw new InvalidOperationException("Sale must contain at least one item.");
-        }
-
-        private decimal CalculateTotalAmount()
-        {
-            decimal total = 0;
-            foreach (var item in Items)
-            {
-                total += item.Total;
-            }
-            return total;
-        }
-
-        private void AddDomainEvent(string eventName)
-        {
-            DomainEvents.Add(eventName);
-        }
-
-        public void Modify(List<SaleItem> newItems)
-        {
-            if (IsCancelled)
-                throw new InvalidOperationException("Cannot modify a cancelled sale.");
-
-            Items = newItems ?? throw new ArgumentNullException(nameof(newItems));
-            ValidateItems();
-            AddDomainEvent("SaleModified");
-        }
-
-        public void Cancel()
-        {
-            if (IsCancelled)
-                throw new InvalidOperationException("Sale is already cancelled.");
-
-            IsCancelled = true;
-            foreach (var item in Items)
-            {
-                item.Cancel();
-            }
-        }
+            IsValid = result.IsValid,
+            Errors = result.Errors.Select(e => (ValidationErrorDetail)e),
+        };
     }
 }
