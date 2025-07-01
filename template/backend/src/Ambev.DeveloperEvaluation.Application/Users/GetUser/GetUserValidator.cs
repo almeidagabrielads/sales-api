@@ -1,18 +1,23 @@
-using FluentValidation;
+// <copyright file="GetUserValidator.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace Ambev.DeveloperEvaluation.Application.Users.GetUser;
 
+using FluentValidation;
+
 /// <summary>
-/// Validator for GetUserCommand
+/// Validator for GetUserCommand.
 /// </summary>
 public class GetUserValidator : AbstractValidator<GetUserCommand>
 {
     /// <summary>
-    /// Initializes validation rules for GetUserCommand
+    /// Initializes a new instance of the <see cref="GetUserValidator"/> class.
+    /// Initializes validation rules for GetUserCommand.
     /// </summary>
     public GetUserValidator()
     {
-        RuleFor(x => x.Id)
+        this.RuleFor(x => x.Id)
             .NotEmpty()
             .WithMessage("User ID is required");
     }

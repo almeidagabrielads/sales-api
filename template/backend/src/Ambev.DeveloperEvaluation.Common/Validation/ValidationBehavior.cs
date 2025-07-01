@@ -1,28 +1,33 @@
-﻿using FluentValidation;
-using MediatR;
+﻿// <copyright file="ValidationBehavior.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace Ambev.DeveloperEvaluation.Common.Validation;
+
+using FluentValidation;
+
+using MediatR;
 
 public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>
 {
-    private readonly IEnumerable<IValidator<TRequest>> _validators;
+    private readonly IEnumerable<IValidator<TRequest>> validators;
 
     public ValidationBehavior(IEnumerable<IValidator<TRequest>> validators)
     {
-        _validators = validators;
+        this.validators = validators;
     }
 
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
-        if (_validators.Any())
+        if (this.validators.Any())
         {
-            var context = new ValidationContext<TRequest>(request);
+            ValidationContext<TRequest> context = new ValidationContext<TRequest>(request);
 
-            var validationResults = await Task.WhenAll(
-                _validators.Select(v => v.ValidateAsync(context, cancellationToken)));
+            FluentValidation.Results.ValidationResult[] validationResults = await Task.WhenAll(
+                this.validators.Select(v => v.ValidateAsync(context, cancellationToken)));
 
-            var failures = validationResults
+            List<FluentValidation.Results.ValidationFailure> failures = validationResults
                 .SelectMany(r => r.Errors)
                 .Where(f => f != null)
                 .ToList();

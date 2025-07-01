@@ -1,9 +1,15 @@
-using Ambev.DeveloperEvaluation.Domain.Validation;
-using Ambev.DeveloperEvaluation.Unit.Domain.Entities.TestData;
-using FluentValidation.TestHelper;
-using Xunit;
+// <copyright file="PasswordValidatorTests.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace Ambev.DeveloperEvaluation.Unit.Domain.Validation;
+
+using Ambev.DeveloperEvaluation.Domain.Validation;
+using Ambev.DeveloperEvaluation.Unit.Domain.Entities.TestData;
+
+using FluentValidation.TestHelper;
+
+using Xunit;
 
 /// <summary>
 /// Contains unit tests for the PasswordValidator class.
@@ -11,11 +17,11 @@ namespace Ambev.DeveloperEvaluation.Unit.Domain.Validation;
 /// </summary>
 public class PasswordValidatorTests
 {
-    private readonly PasswordValidator _validator;
+    private readonly PasswordValidator validator;
 
     public PasswordValidatorTests()
     {
-        _validator = new PasswordValidator();
+        this.validator = new PasswordValidator();
     }
 
     /// <summary>
@@ -25,10 +31,10 @@ public class PasswordValidatorTests
     public void Given_ValidPassword_When_Validated_Then_ShouldNotHaveErrors()
     {
         // Arrange
-        var password = UserTestData.GenerateValidPassword();
+        string password = UserTestData.GenerateValidPassword();
 
         // Act
-        var result = _validator.TestValidate(password);
+        TestValidationResult<string> result = this.validator.TestValidate(password);
 
         // Assert
         result.ShouldNotHaveAnyValidationErrors();
@@ -41,10 +47,10 @@ public class PasswordValidatorTests
     public void Given_EmptyPassword_When_Validated_Then_ShouldHaveError()
     {
         // Arrange
-        var password = string.Empty;
+        string password = string.Empty;
 
         // Act
-        var result = _validator.TestValidate(password);
+        TestValidationResult<string> result = this.validator.TestValidate(password);
 
         // Assert
         result.ShouldHaveValidationErrorFor(x => x);
@@ -60,7 +66,7 @@ public class PasswordValidatorTests
     public void Given_PasswordShorterThanMinimum_When_Validated_Then_ShouldHaveError(string password)
     {
         // Act
-        var result = _validator.TestValidate(password);
+        TestValidationResult<string> result = this.validator.TestValidate(password);
 
         // Assert
         result.ShouldHaveValidationErrorFor(x => x);
@@ -73,10 +79,10 @@ public class PasswordValidatorTests
     public void Given_PasswordWithoutUppercase_When_Validated_Then_ShouldHaveError()
     {
         // Arrange
-        var password = "password@123";
+        string password = "password@123";
 
         // Act
-        var result = _validator.TestValidate(password);
+        TestValidationResult<string> result = this.validator.TestValidate(password);
 
         // Assert
         result.ShouldHaveValidationErrorFor(x => x)
@@ -90,10 +96,10 @@ public class PasswordValidatorTests
     public void Given_PasswordWithoutLowercase_When_Validated_Then_ShouldHaveError()
     {
         // Arrange
-        var password = "PASSWORD@123";
+        string password = "PASSWORD@123";
 
         // Act
-        var result = _validator.TestValidate(password);
+        TestValidationResult<string> result = this.validator.TestValidate(password);
 
         // Assert
         result.ShouldHaveValidationErrorFor(x => x)
@@ -107,10 +113,10 @@ public class PasswordValidatorTests
     public void Given_PasswordWithoutNumber_When_Validated_Then_ShouldHaveError()
     {
         // Arrange
-        var password = "Password@ABC";
+        string password = "Password@ABC";
 
         // Act
-        var result = _validator.TestValidate(password);
+        TestValidationResult<string> result = this.validator.TestValidate(password);
 
         // Assert
         result.ShouldHaveValidationErrorFor(x => x)
@@ -124,10 +130,10 @@ public class PasswordValidatorTests
     public void Given_PasswordWithoutSpecialCharacter_When_Validated_Then_ShouldHaveError()
     {
         // Arrange
-        var password = "Password123";
+        string password = "Password123";
 
         // Act
-        var result = _validator.TestValidate(password);
+        TestValidationResult<string> result = this.validator.TestValidate(password);
 
         // Assert
         result.ShouldHaveValidationErrorFor(x => x)

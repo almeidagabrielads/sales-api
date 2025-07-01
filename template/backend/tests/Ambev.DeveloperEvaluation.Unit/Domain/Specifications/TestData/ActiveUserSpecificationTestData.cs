@@ -1,8 +1,13 @@
-using Ambev.DeveloperEvaluation.Domain.Entities;
-using Ambev.DeveloperEvaluation.Domain.Enums;
-using Bogus;
+// <copyright file="ActiveUserSpecificationTestData.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace Ambev.DeveloperEvaluation.Unit.Domain.Specifications.TestData;
+
+using Ambev.DeveloperEvaluation.Domain.Entities;
+using Ambev.DeveloperEvaluation.Domain.Enums;
+
+using Bogus;
 
 /// <summary>
 /// Provides methods for generating test data using the Bogus library.
@@ -20,16 +25,17 @@ public static class ActiveUserSpecificationTestData
     /// - LastName
     /// - Phone (Brazilian format)
     /// - Role (User)
-    /// Status is not set here as it's the main test parameter
+    /// Status is not set here as it's the main test parameter.
     /// </summary>
-    private static readonly Faker<User> userFaker = new Faker<User>()
-        .CustomInstantiator(f => new User {
+    private static readonly Faker<User> UserFaker = new Faker<User>()
+        .CustomInstantiator(f => new User
+        {
             Email = f.Internet.Email(),
             Password = $"Test@{f.Random.Number(100, 999)}",
             Username = f.Name.FirstName(),
             Status = f.PickRandom<UserStatus>(),
             Phone = $"+55{f.Random.Number(11, 99)}{f.Random.Number(100000000, 999999999)}",
-            Role = f.PickRandom<UserRole> ()
+            Role = f.PickRandom<UserRole>(),
         });
 
     /// <summary>
@@ -39,7 +45,7 @@ public static class ActiveUserSpecificationTestData
     /// <returns>A valid User entity with randomly generated data and specified status.</returns>
     public static User GenerateUser(UserStatus status)
     {
-        var user = userFaker.Generate();
+        User user = UserFaker.Generate();
         user.Status = status;
         return user;
     }

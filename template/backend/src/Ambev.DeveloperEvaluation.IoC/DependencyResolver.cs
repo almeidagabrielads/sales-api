@@ -1,7 +1,12 @@
-﻿using Ambev.DeveloperEvaluation.IoC.ModuleInitializers;
-using Microsoft.AspNetCore.Builder;
+﻿// <copyright file="DependencyResolver.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace Ambev.DeveloperEvaluation.IoC;
+
+using Ambev.DeveloperEvaluation.IoC.ModuleInitializers;
+
+using Microsoft.AspNetCore.Builder;
 
 public static class DependencyResolver
 {

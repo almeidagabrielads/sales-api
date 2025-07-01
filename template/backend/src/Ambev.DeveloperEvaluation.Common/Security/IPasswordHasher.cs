@@ -1,6 +1,10 @@
-using System;
+// <copyright file="IPasswordHasher.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace Ambev.DeveloperEvaluation.Common.Security;
+
+using System;
 
 /// <summary>
 /// Provides functionality for hashing and verifying passwords.

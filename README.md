@@ -38,16 +38,16 @@ tests/
 
 ## Status
 
-- [x] Setup inicial
-- [x] Modelos de domínio
-- [ ] Handlers e validações
-- [ ] Controllers e endpoints
-- [ ] Testes
-- [ ] Documentação
+- [x] Initial setup
+- [x] Domain models
+- [ ] Handlers and validations
+- [ ] Controllers and endpoints
+- [ ] Tests
+- [ ] Documentation
 
-## Licença
+## License
 
-Este projeto é apenas para fins de avaliação técnica.
+This project is for technical evaluation purposes only.
 
 ## Challenge Instructions
 **The test below will have up to 7 calendar days to be delivered from the date of receipt of this manual.**

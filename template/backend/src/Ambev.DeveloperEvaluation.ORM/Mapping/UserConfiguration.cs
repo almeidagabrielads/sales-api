@@ -1,9 +1,15 @@
-﻿using Ambev.DeveloperEvaluation.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System.Text.RegularExpressions;
+﻿// <copyright file="UserConfiguration.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace Ambev.DeveloperEvaluation.ORM.Mapping;
+
+using System.Text.RegularExpressions;
+
+using Ambev.DeveloperEvaluation.Domain.Entities;
+
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 public class UserConfiguration : IEntityTypeConfiguration<User>
 {
@@ -26,6 +32,5 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(u => u.Role)
             .HasConversion<string>()
             .HasMaxLength(20);
-
     }
 }

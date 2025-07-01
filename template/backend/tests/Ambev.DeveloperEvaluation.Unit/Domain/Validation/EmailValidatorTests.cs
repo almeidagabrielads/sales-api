@@ -1,9 +1,15 @@
-using Ambev.DeveloperEvaluation.Domain.Validation;
-using Ambev.DeveloperEvaluation.Unit.Domain.Entities.TestData;
-using FluentValidation.TestHelper;
-using Xunit;
+// <copyright file="EmailValidatorTests.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace Ambev.DeveloperEvaluation.Unit.Domain.Validation;
+
+using Ambev.DeveloperEvaluation.Domain.Validation;
+using Ambev.DeveloperEvaluation.Unit.Domain.Entities.TestData;
+
+using FluentValidation.TestHelper;
+
+using Xunit;
 
 /// <summary>
 /// Contains unit tests for the EmailValidator class.
@@ -11,11 +17,11 @@ namespace Ambev.DeveloperEvaluation.Unit.Domain.Validation;
 /// </summary>
 public class EmailValidatorTests
 {
-    private readonly EmailValidator _validator;
+    private readonly EmailValidator validator;
 
     public EmailValidatorTests()
     {
-        _validator = new EmailValidator();
+        this.validator = new EmailValidator();
     }
 
     /// <summary>
@@ -25,10 +31,10 @@ public class EmailValidatorTests
     public void Given_ValidEmailFormat_When_Validated_Then_ShouldNotHaveErrors()
     {
         // Arrange
-        var email = UserTestData.GenerateValidEmail();
+        string email = UserTestData.GenerateValidEmail();
 
         // Act
-        var result = _validator.TestValidate(email);
+        TestValidationResult<string> result = this.validator.TestValidate(email);
 
         // Assert
         result.ShouldNotHaveAnyValidationErrors();
@@ -41,10 +47,10 @@ public class EmailValidatorTests
     public void Given_EmptyEmail_When_Validated_Then_ShouldHaveError()
     {
         // Arrange
-        var email = string.Empty;
+        string email = string.Empty;
 
         // Act
-        var result = _validator.TestValidate(email);
+        TestValidationResult<string> result = this.validator.TestValidate(email);
 
         // Assert
         result.ShouldHaveValidationErrorFor(x => x)
@@ -63,7 +69,7 @@ public class EmailValidatorTests
     public void Given_InvalidEmailFormat_When_Validated_Then_ShouldHaveError(string email)
     {
         // Act
-        var result = _validator.TestValidate(email);
+        TestValidationResult<string> result = this.validator.TestValidate(email);
 
         // Assert
         result.ShouldHaveValidationErrorFor(x => x)
@@ -77,10 +83,10 @@ public class EmailValidatorTests
     public void Given_EmailExceeding100Characters_When_Validated_Then_ShouldHaveError()
     {
         // Arrange
-        var email = $"{"a".PadLeft(90, 'a')}@example.com"; // Creates email > 100 chars
+        string email = $"{"a".PadLeft(90, 'a')}@example.com"; // Creates email > 100 chars
 
         // Act
-        var result = _validator.TestValidate(email);
+        TestValidationResult<string> result = this.validator.TestValidate(email);
 
         // Assert
         result.ShouldHaveValidationErrorFor(x => x)

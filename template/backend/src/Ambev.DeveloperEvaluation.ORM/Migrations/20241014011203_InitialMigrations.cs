@@ -1,10 +1,15 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿// <copyright file="20241014011203_InitialMigrations.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 #nullable disable
 
 namespace Ambev.DeveloperEvaluation.ORM.Migrations
 {
+    using System;
+
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     /// <inheritdoc />
     public partial class InitialMigrations : Migration
     {
@@ -21,7 +26,7 @@ namespace Ambev.DeveloperEvaluation.ORM.Migrations
                     Phone = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
                     Email = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     Status = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
-                    Role = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false)
+                    Role = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
                 },
                 constraints: table =>
                 {

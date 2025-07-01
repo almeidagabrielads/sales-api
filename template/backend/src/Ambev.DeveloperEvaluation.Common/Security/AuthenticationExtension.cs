@@ -1,22 +1,27 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Text;
+// <copyright file="AuthenticationExtension.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace Ambev.DeveloperEvaluation.Common.Security
 {
+    using System;
+    using System.Text;
+
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.IdentityModel.Tokens;
+
     public static class AuthenticationExtension
     {
         public static IServiceCollection AddJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
 
-            var secretKey = configuration["Jwt:SecretKey"]?.ToString();
+            string? secretKey = configuration["Jwt:SecretKey"]?.ToString();
             ArgumentException.ThrowIfNullOrWhiteSpace(secretKey);
 
-            var key = Encoding.ASCII.GetBytes(secretKey);
+            byte[] key = Encoding.ASCII.GetBytes(secretKey);
 
             services.AddAuthentication(x =>
             {
@@ -33,7 +38,7 @@ namespace Ambev.DeveloperEvaluation.Common.Security
                     IssuerSigningKey = new SymmetricSecurityKey(key),
                     ValidateIssuer = false,
                     ValidateAudience = false,
-                    ClockSkew = TimeSpan.Zero
+                    ClockSkew = TimeSpan.Zero,
                 };
             });
 

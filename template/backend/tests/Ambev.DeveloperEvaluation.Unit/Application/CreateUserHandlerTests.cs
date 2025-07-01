@@ -1,24 +1,32 @@
+// <copyright file="CreateUserHandlerTests.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+namespace Ambev.DeveloperEvaluation.Unit.Application;
+
 using Ambev.DeveloperEvaluation.Application.Users.CreateUser;
 using Ambev.DeveloperEvaluation.Common.Security;
 using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using Ambev.DeveloperEvaluation.Unit.Domain;
-using AutoMapper;
-using FluentAssertions;
-using NSubstitute;
-using Xunit;
 
-namespace Ambev.DeveloperEvaluation.Unit.Application;
+using AutoMapper;
+
+using FluentAssertions;
+
+using NSubstitute;
+
+using Xunit;
 
 /// <summary>
 /// Contains unit tests for the <see cref="CreateUserHandler"/> class.
 /// </summary>
 public class CreateUserHandlerTests
 {
-    private readonly IUserRepository _userRepository;
-    private readonly IMapper _mapper;
-    private readonly IPasswordHasher _passwordHasher;
-    private readonly CreateUserHandler _handler;
+    private readonly IUserRepository userRepository;
+    private readonly IMapper mapper;
+    private readonly IPasswordHasher passwordHasher;
+    private readonly CreateUserHandler handler;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="CreateUserHandlerTests"/> class.
@@ -26,21 +34,22 @@ public class CreateUserHandlerTests
     /// </summary>
     public CreateUserHandlerTests()
     {
-        _userRepository = Substitute.For<IUserRepository>();
-        _mapper = Substitute.For<IMapper>();
-        _passwordHasher = Substitute.For<IPasswordHasher>();
-        _handler = new CreateUserHandler(_userRepository, _mapper, _passwordHasher);
+        this.userRepository = Substitute.For<IUserRepository>();
+        this.mapper = Substitute.For<IMapper>();
+        this.passwordHasher = Substitute.For<IPasswordHasher>();
+        this.handler = new CreateUserHandler(this.userRepository, this.mapper, this.passwordHasher);
     }
 
     /// <summary>
     /// Tests that a valid user creation request is handled successfully.
     /// </summary>
+    /// <returns>A task representing the asynchronous operation.</returns>
     [Fact(DisplayName = "Given valid user data When creating user Then returns success response")]
     public async Task Handle_ValidRequest_ReturnsSuccessResponse()
     {
         // Given
-        var command = CreateUserHandlerTestData.GenerateValidCommand();
-        var user = new User
+        CreateUserCommand command = CreateUserHandlerTestData.GenerateValidCommand();
+        User user = new User
         {
             Id = Guid.NewGuid(),
             Username = command.Username,
@@ -48,42 +57,41 @@ public class CreateUserHandlerTests
             Email = command.Email,
             Phone = command.Phone,
             Status = command.Status,
-            Role = command.Role
+            Role = command.Role,
         };
 
-        var result = new CreateUserResult
+        CreateUserResult result = new CreateUserResult
         {
             Id = user.Id,
         };
+        this.mapper.Map<User>(command).Returns(user);
+        this.mapper.Map<CreateUserResult>(user).Returns(result);
 
-
-        _mapper.Map<User>(command).Returns(user);
-        _mapper.Map<CreateUserResult>(user).Returns(result);
-
-        _userRepository.CreateAsync(Arg.Any<User>(), Arg.Any<CancellationToken>())
+        this.userRepository.CreateAsync(Arg.Any<User>(), Arg.Any<CancellationToken>())
             .Returns(user);
-        _passwordHasher.HashPassword(Arg.Any<string>()).Returns("hashedPassword");
+        this.passwordHasher.HashPassword(Arg.Any<string>()).Returns("hashedPassword");
 
         // When
-        var createUserResult = await _handler.Handle(command, CancellationToken.None);
+        CreateUserResult createUserResult = await this.handler.Handle(command, CancellationToken.None);
 
         // Then
         createUserResult.Should().NotBeNull();
         createUserResult.Id.Should().Be(user.Id);
-        await _userRepository.Received(1).CreateAsync(Arg.Any<User>(), Arg.Any<CancellationToken>());
+        await this.userRepository.Received(1).CreateAsync(Arg.Any<User>(), Arg.Any<CancellationToken>());
     }
 
     /// <summary>
     /// Tests that an invalid user creation request throws a validation exception.
     /// </summary>
+    /// <returns>A task representing the asynchronous operation.</returns>
     [Fact(DisplayName = "Given invalid user data When creating user Then throws validation exception")]
     public async Task Handle_InvalidRequest_ThrowsValidationException()
     {
         // Given
-        var command = new CreateUserCommand(); // Empty command will fail validation
+        CreateUserCommand command = new CreateUserCommand(); // Empty command will fail validation
 
         // When
-        var act = () => _handler.Handle(command, CancellationToken.None);
+        Func<Task<CreateUserResult>> act = () => this.handler.Handle(command, CancellationToken.None);
 
         // Then
         await act.Should().ThrowAsync<FluentValidation.ValidationException>();
@@ -92,14 +100,15 @@ public class CreateUserHandlerTests
     /// <summary>
     /// Tests that the password is hashed before saving the user.
     /// </summary>
+    /// <returns>A task representing the asynchronous operation.</returns>
     [Fact(DisplayName = "Given user creation request When handling Then password is hashed")]
     public async Task Handle_ValidRequest_HashesPassword()
     {
         // Given
-        var command = CreateUserHandlerTestData.GenerateValidCommand();
-        var originalPassword = command.Password;
+        CreateUserCommand command = CreateUserHandlerTestData.GenerateValidCommand();
+        string originalPassword = command.Password;
         const string hashedPassword = "h@shedPassw0rd";
-        var user = new User
+        User user = new User
         {
             Id = Guid.NewGuid(),
             Username = command.Username,
@@ -107,20 +116,20 @@ public class CreateUserHandlerTests
             Email = command.Email,
             Phone = command.Phone,
             Status = command.Status,
-            Role = command.Role
+            Role = command.Role,
         };
 
-        _mapper.Map<User>(command).Returns(user);
-        _userRepository.CreateAsync(Arg.Any<User>(), Arg.Any<CancellationToken>())
+        this.mapper.Map<User>(command).Returns(user);
+        this.userRepository.CreateAsync(Arg.Any<User>(), Arg.Any<CancellationToken>())
             .Returns(user);
-        _passwordHasher.HashPassword(originalPassword).Returns(hashedPassword);
+        this.passwordHasher.HashPassword(originalPassword).Returns(hashedPassword);
 
         // When
-        await _handler.Handle(command, CancellationToken.None);
+        await this.handler.Handle(command, CancellationToken.None);
 
         // Then
-        _passwordHasher.Received(1).HashPassword(originalPassword);
-        await _userRepository.Received(1).CreateAsync(
+        this.passwordHasher.Received(1).HashPassword(originalPassword);
+        await this.userRepository.Received(1).CreateAsync(
             Arg.Is<User>(u => u.Password == hashedPassword),
             Arg.Any<CancellationToken>());
     }
@@ -128,12 +137,13 @@ public class CreateUserHandlerTests
     /// <summary>
     /// Tests that the mapper is called with the correct command.
     /// </summary>
+    /// <returns>A task representing the asynchronous operation.</returns>
     [Fact(DisplayName = "Given valid command When handling Then maps command to user entity")]
     public async Task Handle_ValidRequest_MapsCommandToUser()
     {
         // Given
-        var command = CreateUserHandlerTestData.GenerateValidCommand();
-        var user = new User
+        CreateUserCommand command = CreateUserHandlerTestData.GenerateValidCommand();
+        User user = new User
         {
             Id = Guid.NewGuid(),
             Username = command.Username,
@@ -141,19 +151,19 @@ public class CreateUserHandlerTests
             Email = command.Email,
             Phone = command.Phone,
             Status = command.Status,
-            Role = command.Role
+            Role = command.Role,
         };
 
-        _mapper.Map<User>(command).Returns(user);
-        _userRepository.CreateAsync(Arg.Any<User>(), Arg.Any<CancellationToken>())
+        this.mapper.Map<User>(command).Returns(user);
+        this.userRepository.CreateAsync(Arg.Any<User>(), Arg.Any<CancellationToken>())
             .Returns(user);
-        _passwordHasher.HashPassword(Arg.Any<string>()).Returns("hashedPassword");
+        this.passwordHasher.HashPassword(Arg.Any<string>()).Returns("hashedPassword");
 
         // When
-        await _handler.Handle(command, CancellationToken.None);
+        await this.handler.Handle(command, CancellationToken.None);
 
         // Then
-        _mapper.Received(1).Map<User>(Arg.Is<CreateUserCommand>(c =>
+        this.mapper.Received(1).Map<User>(Arg.Is<CreateUserCommand>(c =>
             c.Username == command.Username &&
             c.Email == command.Email &&
             c.Phone == command.Phone &&

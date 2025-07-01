@@ -1,9 +1,14 @@
+// <copyright file="UserTests.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+namespace Ambev.DeveloperEvaluation.Unit.Domain.Entities;
+
 using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Enums;
 using Ambev.DeveloperEvaluation.Unit.Domain.Entities.TestData;
-using Xunit;
 
-namespace Ambev.DeveloperEvaluation.Unit.Domain.Entities;
+using Xunit;
 
 /// <summary>
 /// Contains unit tests for the User entity class.
@@ -18,7 +23,7 @@ public class UserTests
     public void Given_SuspendedUser_When_Activated_Then_StatusShouldBeActive()
     {
         // Arrange
-        var user = UserTestData.GenerateValidUser();
+        User user = UserTestData.GenerateValidUser();
         user.Status = UserStatus.Suspended;
 
         // Act
@@ -35,7 +40,7 @@ public class UserTests
     public void Given_ActiveUser_When_Suspended_Then_StatusShouldBeSuspended()
     {
         // Arrange
-        var user = UserTestData.GenerateValidUser();
+        User user = UserTestData.GenerateValidUser();
         user.Status = UserStatus.Active;
 
         // Act
@@ -52,10 +57,10 @@ public class UserTests
     public void Given_ValidUserData_When_Validated_Then_ShouldReturnValid()
     {
         // Arrange
-        var user = UserTestData.GenerateValidUser();
+        User user = UserTestData.GenerateValidUser();
 
         // Act
-        var result = user.Validate();
+        Common.Validation.ValidationResultDetail result = user.Validate();
 
         // Assert
         Assert.True(result.IsValid);
@@ -69,18 +74,18 @@ public class UserTests
     public void Given_InvalidUserData_When_Validated_Then_ShouldReturnInvalid()
     {
         // Arrange
-        var user = new User
+        User user = new User
         {
-            Username = "", // Invalid: empty
+            Username = string.Empty, // Invalid: empty
             Password = UserTestData.GenerateInvalidPassword(), // Invalid: doesn't meet password requirements
             Email = UserTestData.GenerateInvalidEmail(), // Invalid: not a valid email
             Phone = UserTestData.GenerateInvalidPhone(), // Invalid: doesn't match pattern
             Status = UserStatus.Unknown, // Invalid: cannot be Unknown
-            Role = UserRole.None // Invalid: cannot be None
+            Role = UserRole.None, // Invalid: cannot be None
         };
 
         // Act
-        var result = user.Validate();
+        Common.Validation.ValidationResultDetail result = user.Validate();
 
         // Assert
         Assert.False(result.IsValid);
