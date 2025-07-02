@@ -10,21 +10,25 @@ dotnet_diagnostic.SA1611.severity = none
 dotnet_diagnostic.SA1615.severity = none
 dotnet_diagnostic.SA1618.severity = none
 dotnet_diagnostic.SA1616.severity = none
+dotnet_diagnostic.SA1309.severity = none
 
 # Ignore spacing issues with C# 12 shorthand
 dotnet_diagnostic.SA1010.severity = none
 dotnet_diagnostic.SA1003.severity = none
+dotnet_diagnostic.SA1413.severity = none
+dotnet_diagnostic.SA1516.severity = none
+dotnet_diagnostic.SA1505.severity = none
+dotnet_diagnostic.SA1508.severity = none
 
 # Relax file/type strictness but show as suggestion
-dotnet_diagnostic.SA1649.severity = suggestion
-dotnet_diagnostic.SA1402.severity = suggestion
-dotnet_diagnostic.SA1200.severity = suggestion
-dotnet_diagnostic.SA1633.severity = suggestion
+dotnet_diagnostic.SA1649.severity = none
+dotnet_diagnostic.SA1402.severity = none
+dotnet_diagnostic.SA1200.severity = none
+dotnet_diagnostic.SA1633.severity = none
 
-
-dotnet_diagnostic.CS1591.severity = suggestion
-dotnet_diagnostic.CS1574.severity = suggestion
-dotnet_diagnostic.CS1572.severity = suggestion
+dotnet_diagnostic.CS1591.severity = none
+dotnet_diagnostic.CS1574.severity = none
+dotnet_diagnostic.CS1572.severity = none
 
 
 # Optional: style fixes that make team code more readable
