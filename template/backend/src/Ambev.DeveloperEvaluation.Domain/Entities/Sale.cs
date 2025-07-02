@@ -16,9 +16,13 @@ public class Sale : BaseEntity
 
     public string SaleNumber { get; set; } = string.Empty;
 
-    public Customer Customer { get; set; }
+    public Guid CustomerId { get; set; }
 
-    public Branch Branch { get; set; }
+    public virtual Customer Customer { get; set; }
+
+    public Guid BranchId { get; set; }
+
+    public virtual Branch Branch { get; set; }
 
     public List<SaleItem> Items { get; set; }
 

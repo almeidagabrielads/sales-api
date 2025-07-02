@@ -4,8 +4,6 @@
 
 namespace Ambev.DeveloperEvaluation.ORM.Mapping;
 
-using System.Text.RegularExpressions;
-
 using Ambev.DeveloperEvaluation.Domain.Entities;
 
 using Microsoft.EntityFrameworkCore;

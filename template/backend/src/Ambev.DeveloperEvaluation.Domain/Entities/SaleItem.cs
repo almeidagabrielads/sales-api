@@ -9,11 +9,11 @@ public class SaleItem : BaseEntity
         this.Product = new();
     }
 
-    public Product Product { get; set; }
+    public Guid ProductId { get; set; }
+
+    public virtual Product Product { get; set; }
 
     public int Quantity { get; set; }
-
-    public decimal UnitPrice { get; set; }
 
     public decimal Discount { get; set; }
 
@@ -43,7 +43,7 @@ public class SaleItem : BaseEntity
 
     private decimal CalculateTotal()
     {
-        decimal gross = this.Quantity * this.UnitPrice;
+        decimal gross = this.Quantity * this.Product.UnitPrice;
         decimal discountAmount = gross * this.Discount;
         return gross - discountAmount;
     }
