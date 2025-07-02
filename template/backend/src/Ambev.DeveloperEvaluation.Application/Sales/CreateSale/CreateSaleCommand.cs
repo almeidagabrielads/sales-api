@@ -2,6 +2,8 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
+using Ambev.DeveloperEvaluation.Sales.CreateSale;
+
 namespace Ambev.DeveloperEvaluation.Application.Sales.CreateSale;
 
 using Ambev.DeveloperEvaluation.Common.Validation;

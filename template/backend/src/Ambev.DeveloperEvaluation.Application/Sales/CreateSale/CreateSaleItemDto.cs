@@ -1,6 +1,7 @@
 // <copyright file="CreateSaleItemDto.cs" company="PlaceholderCompany">
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
+namespace Ambev.DeveloperEvaluation.Sales.CreateSale;
 
 /// <summary>
 /// DTO representing a single item in a sale.
@@ -9,6 +10,7 @@
 /// Contains the product external ID and the quantity sold.
 /// Used within <see cref="CreateSaleCommand"/> to specify multiple items.
 /// </remarks>
+///
 public class CreateSaleItemDto
 {
     /// <summary>

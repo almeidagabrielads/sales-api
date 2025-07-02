@@ -18,7 +18,9 @@ public class CustomerValidator : AbstractValidator<Customer>
 
         this.RuleFor(customer => customer.ExternalId)
             .NotEmpty()
-            .WithMessage("Customer ExternalId is required.");
+            .WithMessage("Customer ExternalId is required.")
+            .MaximumLength(50)
+            .WithMessage("Customer ExternalId must not exceed 50 characters.");
 
         this.RuleFor(customer => customer.Name)
             .NotEmpty()

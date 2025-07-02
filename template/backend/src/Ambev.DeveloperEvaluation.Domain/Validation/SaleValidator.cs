@@ -16,8 +16,8 @@ public class SaleValidator : AbstractValidator<Sale>
         this.RuleFor(sale => sale.SaleNumber)
             .NotEmpty()
             .WithMessage("Sale number must not be empty.")
-            .MaximumLength(500)
-            .WithMessage("Sale number must not exceed 500 characters.");
+            .MaximumLength(50)
+            .WithMessage("Sale number must not exceed 50 characters.");
 
         this.RuleFor(sale => sale.Customer)
             .SetValidator(new CustomerValidator());

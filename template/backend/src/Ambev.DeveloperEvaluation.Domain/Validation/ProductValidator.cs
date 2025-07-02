@@ -18,7 +18,9 @@ public class ProductValidator : AbstractValidator<Product>
 
         this.RuleFor(product => product.ExternalId)
             .NotEmpty()
-            .WithMessage("Product ExternalId is required.");
+            .WithMessage("Product ExternalId is required.")
+            .MaximumLength(50)
+            .WithMessage("Product ExternalId must not exceed 50 characters.");
 
         this.RuleFor(product => product.Name)
             .NotEmpty()

@@ -2,9 +2,8 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace Ambev.DeveloperEvaluation.Sales.CreateSale;
+namespace Ambev.DeveloperEvaluation.Application.Sales.CreateSale;
 
-using Ambev.DeveloperEvaluation.Application.Sales.CreateSale;
 using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 
@@ -14,20 +13,17 @@ using FluentValidation;
 
 using MediatR;
 
-public class CreateSaleCommandHandler : IRequestHandler<CreateSaleCommand, CreateSaleResult>
+public class CreateSaleHandler : IRequestHandler<CreateSaleCommand, CreateSaleResult>
 {
     private readonly ISaleRepository saleRepository;
     private readonly IMapper mapper;
-    private readonly IValidator<Sale> validator;
 
-    public CreateSaleCommandHandler(
+    public CreateSaleHandler(
         ISaleRepository saleRepository,
-        IMapper mapper,
-        IValidator<Sale> validator)
+        IMapper mapper)
     {
         this.saleRepository = saleRepository;
         this.mapper = mapper;
-        this.validator = validator;
     }
 
     public async Task<CreateSaleResult> Handle(CreateSaleCommand command, CancellationToken cancellationToken)

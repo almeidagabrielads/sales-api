@@ -1,7 +1,3 @@
-// <copyright file="BranchValidator.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
 namespace Ambev.DeveloperEvaluation.Application.Validators;
 
 using Ambev.DeveloperEvaluation.Domain.Entities;
@@ -18,7 +14,9 @@ public class BranchValidator : AbstractValidator<Branch>
 
         this.RuleFor(branch => branch.ExternalId)
             .NotEmpty()
-            .WithMessage("Branch ExternalId is required.");
+            .WithMessage("Branch ExternalId is required.")
+            .MaximumLength(50)
+            .WithMessage("Branch ExternalId must not exceed 50 characters.");
 
         this.RuleFor(branch => branch.Name)
             .NotEmpty()
