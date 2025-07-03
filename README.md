@@ -38,12 +38,12 @@ tests/
 
 ## Status
 
-- [x] Initial setup
-- [x] Domain models
-- [ ] Handlers and validations
-- [ ] Controllers and endpoints
-- [ ] Tests
-- [ ] Documentation
+- [x] Setup inicial
+- [x] Modelos de domínio
+- [ ] Handlers e validações
+- [ ] Controllers e endpoints
+- [ ] Testes
+- [ ] Documentação
 
 ## License
 
