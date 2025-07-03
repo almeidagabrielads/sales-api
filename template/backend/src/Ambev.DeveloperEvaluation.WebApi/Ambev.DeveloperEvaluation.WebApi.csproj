@@ -32,5 +32,10 @@
     <Folder Include="Features\Users\ListUsers\" />
     <Folder Include="Features\Users\UpdateUser\" />
   </ItemGroup>
-
+  
+  <ItemGroup>
+    <Content Include="$(OutputPath)Ambev.DeveloperEvaluation.WebApi.deps.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 </Project>
