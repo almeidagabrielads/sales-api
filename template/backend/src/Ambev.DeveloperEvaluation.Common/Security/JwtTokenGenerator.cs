@@ -1,25 +1,30 @@
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
+// <copyright file="JwtTokenGenerator.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+namespace Ambev.DeveloperEvaluation.Common.Security;
+
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace Ambev.DeveloperEvaluation.Common.Security;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 
 /// <summary>
 /// Implementation of JWT (JSON Web Token) generator.
 /// </summary>
 public class JwtTokenGenerator : IJwtTokenGenerator
 {
-    private readonly IConfiguration _configuration;
+    private readonly IConfiguration configuration;
 
     /// <summary>
-    /// Initializes a new instance of the JWT token generator.
+    /// Initializes a new instance of the <see cref="JwtTokenGenerator"/> class.
     /// </summary>
     /// <param name="configuration">Application configuration containing the necessary keys for token generation.</param>
     public JwtTokenGenerator(IConfiguration configuration)
     {
-        _configuration = configuration;
+        this.configuration = configuration;
     }
 
     /// <summary>
@@ -32,32 +37,37 @@ public class JwtTokenGenerator : IJwtTokenGenerator
     /// - NameIdentifier (User ID)
     /// - Name (Username)
     /// - Role (User role)
-    /// 
     /// The token is valid for 8 hours from the moment of generation.
     /// </remarks>
     /// <exception cref="ArgumentNullException">Thrown when user or secret key is not provided.</exception>
     public string GenerateToken(IUser user)
     {
-        var tokenHandler = new JwtSecurityTokenHandler();
-        var key = Encoding.ASCII.GetBytes(_configuration["Jwt:SecretKey"]);
+        JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+        string? secretKey = this.configuration["Jwt:SecretKey"];
+        if (string.IsNullOrEmpty(secretKey))
+        {
+            throw new ArgumentNullException(nameof(secretKey), "JWT secret key is not configured.");
+        }
 
-        var claims = new[]
+        byte[] key = Encoding.ASCII.GetBytes(secretKey);
+
+        Claim[] claims = new[]
         {
            new Claim(ClaimTypes.NameIdentifier, user.Id),
            new Claim(ClaimTypes.Name, user.Username),
-           new Claim(ClaimTypes.Role, user.Role)
-       };
+           new Claim(ClaimTypes.Role, user.Role),
+        };
 
-        var tokenDescriptor = new SecurityTokenDescriptor
+        SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(claims),
             Expires = DateTime.UtcNow.AddHours(8),
             SigningCredentials = new SigningCredentials(
                 new SymmetricSecurityKey(key),
-                SecurityAlgorithms.HmacSha256Signature)
+                SecurityAlgorithms.HmacSha256Signature),
         };
 
-        var token = tokenHandler.CreateToken(tokenDescriptor);
+        SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
         return tokenHandler.WriteToken(token);
     }
 }

@@ -1,24 +1,30 @@
-﻿using Ambev.DeveloperEvaluation.Common.Validation;
-using Ambev.DeveloperEvaluation.WebApi.Common;
-using FluentValidation;
-using System.Text.Json;
+﻿// <copyright file="ValidationExceptionMiddleware.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace Ambev.DeveloperEvaluation.WebApi.Middleware
 {
+    using System.Text.Json;
+
+    using Ambev.DeveloperEvaluation.Common.Validation;
+    using Ambev.DeveloperEvaluation.WebApi.Common;
+
+    using FluentValidation;
+
     public class ValidationExceptionMiddleware
     {
-        private readonly RequestDelegate _next;
+        private readonly RequestDelegate next;
 
         public ValidationExceptionMiddleware(RequestDelegate next)
         {
-            _next = next;
+            this.next = next;
         }
 
         public async Task InvokeAsync(HttpContext context)
         {
             try
             {
-                await _next(context);
+                await this.next(context);
             }
             catch (ValidationException ex)
             {
@@ -31,17 +37,17 @@ namespace Ambev.DeveloperEvaluation.WebApi.Middleware
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = StatusCodes.Status400BadRequest;
 
-            var response = new ApiResponse
+            ApiResponse response = new ApiResponse
             {
                 Success = false,
                 Message = "Validation Failed",
                 Errors = exception.Errors
-                    .Select(error => (ValidationErrorDetail)error)
+                    .Select(error => (ValidationErrorDetail)error),
             };
 
-            var jsonOptions = new JsonSerializerOptions
+            JsonSerializerOptions jsonOptions = new JsonSerializerOptions
             {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
             };
 
             return context.Response.WriteAsync(JsonSerializer.Serialize(response, jsonOptions));

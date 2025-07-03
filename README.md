@@ -45,9 +45,9 @@ tests/
 - [ ] Testes
 - [ ] Documentação
 
-## Licença
+## License
 
-Este projeto é apenas para fins de avaliação técnica.
+This project is for technical evaluation purposes only.
 
 ## Challenge Instructions
 **The test below will have up to 7 calendar days to be delivered from the date of receipt of this manual.**

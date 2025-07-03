@@ -1,11 +1,14 @@
+// <copyright file="User.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+namespace Ambev.DeveloperEvaluation.Domain.Entities;
+
 using Ambev.DeveloperEvaluation.Common.Security;
 using Ambev.DeveloperEvaluation.Common.Validation;
 using Ambev.DeveloperEvaluation.Domain.Common;
 using Ambev.DeveloperEvaluation.Domain.Enums;
 using Ambev.DeveloperEvaluation.Domain.Validation;
-
-namespace Ambev.DeveloperEvaluation.Domain.Entities;
-
 
 /// <summary>
 /// Represents a user in the system with authentication and profile information.
@@ -14,49 +17,57 @@ namespace Ambev.DeveloperEvaluation.Domain.Entities;
 public class User : BaseEntity, IUser
 {
     /// <summary>
-    /// Gets the user's full name.
+    /// Initializes a new instance of the <see cref="User"/> class.
+    /// </summary>
+    public User()
+    {
+        this.CreatedAt = DateTime.UtcNow;
+    }
+
+    /// <summary>
+    /// Gets or sets the user's full name.
     /// Must not be null or empty and should contain both first and last names.
     /// </summary>
     public string Username { get; set; } = string.Empty;
 
     /// <summary>
-    /// Gets the user's email address.
+    /// Gets or sets the user's email address.
     /// Must be a valid email format and is used as a unique identifier for authentication.
     /// </summary>
     public string Email { get; set; } = string.Empty;
 
     /// <summary>
-    /// Gets the user's phone number.
+    /// Gets or sets the user's phone number.
     /// Must be a valid phone number format following the pattern (XX) XXXXX-XXXX.
     /// </summary>
-    public string Phone { get; set; } = string.Empty ;
+    public string Phone { get; set; } = string.Empty;
 
     /// <summary>
-    /// Gets the hashed password for authentication.
+    /// Gets or sets the hashed password for authentication.
     /// Password must meet security requirements: minimum 8 characters, at least one uppercase letter,
     /// one lowercase letter, one number, and one special character.
     /// </summary>
     public string Password { get; set; } = string.Empty;
 
     /// <summary>
-    /// Gets the user's role in the system.
+    /// Gets or sets the user's role in the system.
     /// Determines the user's permissions and access levels.
     /// </summary>
-    public UserRole Role { get;     set; }
+    public UserRole Role { get; set; }
 
     /// <summary>
-    /// Gets the user's current status.
+    /// Gets or sets the user's current status.
     /// Indicates whether the user is active, inactive, or blocked in the system.
     /// </summary>
     public UserStatus Status { get; set; }
 
     /// <summary>
-    /// Gets the date and time when the user was created.
+    /// Gets or sets the date and time when the user was created.
     /// </summary>
     public DateTime CreatedAt { get; set; }
 
     /// <summary>
-    /// Gets the date and time of the last update to the user's information.
+    /// Gets or sets the date and time of the last update to the user's information.
     /// </summary>
     public DateTime? UpdatedAt { get; set; }
 
@@ -64,27 +75,19 @@ public class User : BaseEntity, IUser
     /// Gets the unique identifier of the user.
     /// </summary>
     /// <returns>The user's ID as a string.</returns>
-    string IUser.Id => Id.ToString();
+    string IUser.Id => this.Id.ToString();
 
     /// <summary>
     /// Gets the username.
     /// </summary>
     /// <returns>The username.</returns>
-    string IUser.Username => Username;
+    string IUser.Username => this.Username;
 
     /// <summary>
     /// Gets the user's role in the system.
     /// </summary>
     /// <returns>The user's role as a string.</returns>
-    string IUser.Role => Role.ToString();
-
-    /// <summary>
-    /// Initializes a new instance of the User class.
-    /// </summary>
-    public User()
-    {
-        CreatedAt = DateTime.UtcNow;
-    }
+    string IUser.Role => this.Role.ToString();
 
     /// <summary>
     /// Performs validation of the user entity using the UserValidator rules.
@@ -92,7 +95,7 @@ public class User : BaseEntity, IUser
     /// <returns>
     /// A <see cref="ValidationResultDetail"/> containing:
     /// - IsValid: Indicates whether all validation rules passed
-    /// - Errors: Collection of validation errors if any rules failed
+    /// - Errors: Collection of validation errors if any rules failed.
     /// </returns>
     /// <remarks>
     /// <listheader>The validation includes checking:</listheader>
@@ -101,16 +104,16 @@ public class User : BaseEntity, IUser
     /// <list type="bullet">Phone number format</list>
     /// <list type="bullet">Password complexity requirements</list>
     /// <list type="bullet">Role validity</list>
-    /// 
+    ///
     /// </remarks>
     public ValidationResultDetail Validate()
     {
-        var validator = new UserValidator();
-        var result = validator.Validate(this);
+        UserValidator validator = new UserValidator();
+        FluentValidation.Results.ValidationResult result = validator.Validate(this);
         return new ValidationResultDetail
         {
             IsValid = result.IsValid,
-            Errors = result.Errors.Select(o => (ValidationErrorDetail)o)
+            Errors = result.Errors.Select(o => (ValidationErrorDetail)o),
         };
     }
 
@@ -120,8 +123,8 @@ public class User : BaseEntity, IUser
     /// </summary>
     public void Activate()
     {
-        Status = UserStatus.Active;
-        UpdatedAt = DateTime.UtcNow;
+        this.Status = UserStatus.Active;
+        this.UpdatedAt = DateTime.UtcNow;
     }
 
     /// <summary>
@@ -130,8 +133,8 @@ public class User : BaseEntity, IUser
     /// </summary>
     public void Deactivate()
     {
-        Status = UserStatus.Inactive;
-        UpdatedAt = DateTime.UtcNow;
+        this.Status = UserStatus.Inactive;
+        this.UpdatedAt = DateTime.UtcNow;
     }
 
     /// <summary>
@@ -140,7 +143,7 @@ public class User : BaseEntity, IUser
     /// </summary>
     public void Suspend()
     {
-        Status = UserStatus.Suspended;
-        UpdatedAt = DateTime.UtcNow;
+        this.Status = UserStatus.Suspended;
+        this.UpdatedAt = DateTime.UtcNow;
     }
 }

@@ -1,12 +1,17 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿// <copyright file="HealthChecksExtension.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+namespace Ambev.DeveloperEvaluation.Common.HealthChecks;
+
+using System.Net.Mime;
+
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Logging;
-using System.Net.Mime;
-
-namespace Ambev.DeveloperEvaluation.Common.HealthChecks;
 
 /// <summary>
 /// Provides extension methods for configuring health checks in an ASP.NET Core application.
@@ -43,8 +48,8 @@ public static class HealthChecksExtension
     public static void AddBasicHealthChecks(this WebApplicationBuilder builder)
     {
         builder.Services.AddHealthChecks()
-            .AddCheck("Liveness", () => HealthCheckResult.Healthy(), tags: ["liveness"])
-            .AddCheck("Readiness", () => HealthCheckResult.Healthy(), tags: ["readiness"]);
+            .AddCheck("Liveness", () => HealthCheckResult.Healthy(), tags: new[] { "liveness" })
+            .AddCheck("Readiness", () => HealthCheckResult.Healthy(), tags: new[] { "readiness" });
     }
 
     /// <summary>
@@ -74,16 +79,16 @@ public static class HealthChecksExtension
     /// </example>
     public static void UseBasicHealthChecks(this WebApplication app)
     {
-        var livenessOptions = WriteHealtCheckRespose(app, "liveness");
+        HealthCheckOptions livenessOptions = WriteHealtCheckRespose(app, "liveness");
         app.UseHealthChecks("/health/live", livenessOptions);
 
-        var readinessOptions = WriteHealtCheckRespose(app, "readiness");
+        HealthCheckOptions readinessOptions = WriteHealtCheckRespose(app, "readiness");
         app.UseHealthChecks("/health/ready", readinessOptions);
 
-        var healthOptions = WriteHealtCheckRespose(app, string.Empty);
+        HealthCheckOptions healthOptions = WriteHealtCheckRespose(app, string.Empty);
         app.UseHealthChecks("/health", healthOptions);
 
-        var logger = app.Services.GetRequiredService<ILogger<HealthCheckService>>();
+        ILogger<HealthCheckService> logger = app.Services.GetRequiredService<ILogger<HealthCheckService>>();
         logger.LogInformation("Health Check enabled at: '/health'");
     }
 
@@ -101,14 +106,14 @@ public static class HealthChecksExtension
     /// </remarks>
     private static HealthCheckOptions WriteHealtCheckRespose(this WebApplication app, string tag)
     {
-        var options = new HealthCheckOptions
+        HealthCheckOptions options = new HealthCheckOptions
         {
             Predicate = (check) => check.Tags.Contains(tag),
             ResultStatusCodes =
             {
                 [HealthStatus.Healthy] = StatusCodes.Status200OK,
                 [HealthStatus.Degraded] = StatusCodes.Status200OK,
-                [HealthStatus.Unhealthy] = StatusCodes.Status503ServiceUnavailable
+                [HealthStatus.Unhealthy] = StatusCodes.Status503ServiceUnavailable,
             },
             ResponseWriter = async (context, report) =>
             {
@@ -121,7 +126,7 @@ public static class HealthChecksExtension
                         status = e.Value.Status.ToString(),
                         description = e.Value.Description,
                         errorMessage = e.Value.Exception?.Message,
-                        hostEnvironment = app.Environment.EnvironmentName.ToLowerInvariant()
+                        hostEnvironment = app.Environment.EnvironmentName.ToLowerInvariant(),
                     }),
                 };
                 context.Response.ContentType = MediaTypeNames.Application.Json;

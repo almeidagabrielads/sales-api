@@ -1,18 +1,23 @@
-using FluentValidation;
+// <copyright file="DeleteUserValidator.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace Ambev.DeveloperEvaluation.Application.Users.DeleteUser;
 
+using FluentValidation;
+
 /// <summary>
-/// Validator for DeleteUserCommand
+/// Validator for DeleteUserCommand.
 /// </summary>
 public class DeleteUserValidator : AbstractValidator<DeleteUserCommand>
 {
     /// <summary>
-    /// Initializes validation rules for DeleteUserCommand
+    /// Initializes a new instance of the <see cref="DeleteUserValidator"/> class.
+    /// Initializes validation rules for DeleteUserCommand.
     /// </summary>
     public DeleteUserValidator()
     {
-        RuleFor(x => x.Id)
+        this.RuleFor(x => x.Id)
             .NotEmpty()
             .WithMessage("User ID is required");
     }

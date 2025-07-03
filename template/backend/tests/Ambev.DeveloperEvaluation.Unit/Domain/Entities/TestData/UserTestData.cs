@@ -1,8 +1,13 @@
-using Ambev.DeveloperEvaluation.Domain.Entities;
-using Ambev.DeveloperEvaluation.Domain.Enums;
-using Bogus;
+// <copyright file="UserTestData.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace Ambev.DeveloperEvaluation.Unit.Domain.Entities.TestData;
+
+using Ambev.DeveloperEvaluation.Domain.Entities;
+using Ambev.DeveloperEvaluation.Domain.Enums;
+
+using Bogus;
 
 /// <summary>
 /// Provides methods for generating test data using the Bogus library.
@@ -19,7 +24,7 @@ public static class UserTestData
     /// - Email (valid format)
     /// - Phone (Brazilian format)
     /// - Status (Active or Suspended)
-    /// - Role (Customer or Admin)
+    /// - Role (Customer or Admin).
     /// </summary>
     private static readonly Faker<User> UserFaker = new Faker<User>()
         .RuleFor(u => u.Username, f => f.Internet.UserName())
@@ -45,7 +50,7 @@ public static class UserTestData
     /// The generated email will:
     /// - Follow the standard email format (user@domain.com)
     /// - Have valid characters in both local and domain parts
-    /// - Have a valid TLD
+    /// - Have a valid TLD.
     /// </summary>
     /// <returns>A valid email address.</returns>
     public static string GenerateValidEmail()
@@ -60,7 +65,7 @@ public static class UserTestData
     /// - At least one uppercase letter
     /// - At least one lowercase letter
     /// - At least one number
-    /// - At least one special character
+    /// - At least one special character.
     /// </summary>
     /// <returns>A valid password meeting all complexity requirements.</returns>
     public static string GenerateValidPassword()
@@ -74,12 +79,12 @@ public static class UserTestData
     /// - Start with country code (+55)
     /// - Have a valid area code (11-99)
     /// - Have 9 digits for the phone number
-    /// - Follow the format: +55XXXXXXXXXXXX
+    /// - Follow the format: +55XXXXXXXXXXXX.
     /// </summary>
     /// <returns>A valid Brazilian phone number.</returns>
     public static string GenerateValidPhone()
     {
-        var faker = new Faker();
+        Faker faker = new Faker();
         return $"+55{faker.Random.Number(11, 99)}{faker.Random.Number(100000000, 999999999)}";
     }
 
@@ -88,7 +93,7 @@ public static class UserTestData
     /// The generated username will:
     /// - Be between 3 and 50 characters
     /// - Use internet username conventions
-    /// - Contain only valid characters
+    /// - Contain only valid characters.
     /// </summary>
     /// <returns>A valid username.</returns>
     public static string GenerateValidUsername()
@@ -107,7 +112,7 @@ public static class UserTestData
     /// <returns>An invalid email address.</returns>
     public static string GenerateInvalidEmail()
     {
-        var faker = new Faker();
+        Faker faker = new Faker();
         return faker.Lorem.Word();
     }
 

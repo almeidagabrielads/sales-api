@@ -1,6 +1,10 @@
-﻿using FluentValidation;
+﻿// <copyright file="Validator.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace Ambev.DeveloperEvaluation.Common.Validation;
+
+using FluentValidation;
 
 public static class Validator
 {
@@ -13,13 +17,13 @@ public static class Validator
             throw new InvalidOperationException($"No validator found for: {typeof(T).Name}");
         }
 
-        var result = await validator.ValidateAsync(new ValidationContext<T>(instance));
+        FluentValidation.Results.ValidationResult result = await validator.ValidateAsync(new ValidationContext<T>(instance));
 
         if (!result.IsValid)
         {
             return result.Errors.Select(o => (ValidationErrorDetail)o);
         }
 
-        return [];
+        return Enumerable.Empty<ValidationErrorDetail>();
     }
 }

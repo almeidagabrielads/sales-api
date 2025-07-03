@@ -1,4 +1,8 @@
-﻿namespace Ambev.DeveloperEvaluation.Common.Security
+﻿// <copyright file="IUser.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+namespace Ambev.DeveloperEvaluation.Common.Security
 {
     /// <summary>
     /// Define o contrato para representação de um usuário no sistema.
@@ -6,19 +10,19 @@
     public interface IUser
     {
         /// <summary>
-        /// Obtém o identificador único do usuário.
+        /// Gets obtém o identificador único do usuário.
         /// </summary>
         /// <returns>O ID do usuário como uma string.</returns>
         public string Id { get; }
 
         /// <summary>
-        /// Obtém o nome de usuário.
+        /// Gets obtém o nome de usuário.
         /// </summary>
         /// <returns>O nome de usuário.</returns>
         public string Username { get; }
 
         /// <summary>
-        /// Obtém o papel/função do usuário no sistema.
+        /// Gets obtém o papel/função do usuário no sistema.
         /// </summary>
         /// <returns>O papel do usuário como uma string.</returns>
         public string Role { get; }

@@ -1,6 +1,10 @@
-﻿using Ambev.DeveloperEvaluation.Common.Validation;
+﻿// <copyright file="BaseEntity.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace Ambev.DeveloperEvaluation.Domain.Common;
+
+using Ambev.DeveloperEvaluation.Common.Validation;
 
 public class BaseEntity : IComparable<BaseEntity>
 {
@@ -18,6 +22,6 @@ public class BaseEntity : IComparable<BaseEntity>
             return 1;
         }
 
-        return other!.Id.CompareTo(Id);
+        return other!.Id.CompareTo(this.Id);
     }
 }

@@ -1,10 +1,16 @@
+// <copyright file="UserValidatorTests.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+namespace Ambev.DeveloperEvaluation.Unit.Domain.Validation;
+
 using Ambev.DeveloperEvaluation.Domain.Enums;
 using Ambev.DeveloperEvaluation.Domain.Validation;
 using Ambev.DeveloperEvaluation.Unit.Domain.Entities.TestData;
-using FluentValidation.TestHelper;
-using Xunit;
 
-namespace Ambev.DeveloperEvaluation.Unit.Domain.Validation;
+using FluentValidation.TestHelper;
+
+using Xunit;
 
 /// <summary>
 /// Contains unit tests for the UserValidator class.
@@ -13,11 +19,11 @@ namespace Ambev.DeveloperEvaluation.Unit.Domain.Validation;
 /// </summary>
 public class UserValidatorTests
 {
-    private readonly UserValidator _validator;
+    private readonly UserValidator validator;
 
     public UserValidatorTests()
     {
-        _validator = new UserValidator();
+        this.validator = new UserValidator();
     }
 
     /// <summary>
@@ -35,10 +41,10 @@ public class UserValidatorTests
     public void Given_ValidUser_When_Validated_Then_ShouldNotHaveErrors()
     {
         // Arrange
-        var user = UserTestData.GenerateValidUser();
+        DeveloperEvaluation.Domain.Entities.User user = UserTestData.GenerateValidUser();
 
         // Act
-        var result = _validator.TestValidate(user);
+        TestValidationResult<DeveloperEvaluation.Domain.Entities.User> result = this.validator.TestValidate(user);
 
         // Assert
         result.ShouldNotHaveAnyValidationErrors();
@@ -59,11 +65,11 @@ public class UserValidatorTests
     public void Given_InvalidUsername_When_Validated_Then_ShouldHaveError(string username)
     {
         // Arrange
-        var user = UserTestData.GenerateValidUser();
+        DeveloperEvaluation.Domain.Entities.User user = UserTestData.GenerateValidUser();
         user.Username = username;
 
         // Act
-        var result = _validator.TestValidate(user);
+        TestValidationResult<DeveloperEvaluation.Domain.Entities.User> result = this.validator.TestValidate(user);
 
         // Assert
         result.ShouldHaveValidationErrorFor(x => x.Username);
@@ -79,11 +85,11 @@ public class UserValidatorTests
     public void Given_UsernameLongerThanMaximum_When_Validated_Then_ShouldHaveError()
     {
         // Arrange
-        var user = UserTestData.GenerateValidUser();
+        DeveloperEvaluation.Domain.Entities.User user = UserTestData.GenerateValidUser();
         user.Username = UserTestData.GenerateLongUsername();
 
         // Act
-        var result = _validator.TestValidate(user);
+        TestValidationResult<DeveloperEvaluation.Domain.Entities.User> result = this.validator.TestValidate(user);
 
         // Assert
         result.ShouldHaveValidationErrorFor(x => x.Username);
@@ -102,11 +108,11 @@ public class UserValidatorTests
     public void Given_InvalidEmail_When_Validated_Then_ShouldHaveError()
     {
         // Arrange
-        var user = UserTestData.GenerateValidUser();
+        DeveloperEvaluation.Domain.Entities.User user = UserTestData.GenerateValidUser();
         user.Email = UserTestData.GenerateInvalidEmail();
 
         // Act
-        var result = _validator.TestValidate(user);
+        TestValidationResult<DeveloperEvaluation.Domain.Entities.User> result = this.validator.TestValidate(user);
 
         // Assert
         result.ShouldHaveValidationErrorFor(x => x.Email);
@@ -127,11 +133,11 @@ public class UserValidatorTests
     public void Given_InvalidPassword_When_Validated_Then_ShouldHaveError()
     {
         // Arrange
-        var user = UserTestData.GenerateValidUser();
+        DeveloperEvaluation.Domain.Entities.User user = UserTestData.GenerateValidUser();
         user.Password = UserTestData.GenerateInvalidPassword();
 
         // Act
-        var result = _validator.TestValidate(user);
+        TestValidationResult<DeveloperEvaluation.Domain.Entities.User> result = this.validator.TestValidate(user);
 
         // Assert
         result.ShouldHaveValidationErrorFor(x => x.Password);
@@ -150,11 +156,11 @@ public class UserValidatorTests
     public void Given_InvalidPhone_When_Validated_Then_ShouldHaveError()
     {
         // Arrange
-        var user = UserTestData.GenerateValidUser();
+        DeveloperEvaluation.Domain.Entities.User user = UserTestData.GenerateValidUser();
         user.Phone = UserTestData.GenerateInvalidPhone();
 
         // Act
-        var result = _validator.TestValidate(user);
+        TestValidationResult<DeveloperEvaluation.Domain.Entities.User> result = this.validator.TestValidate(user);
 
         // Assert
         result.ShouldHaveValidationErrorFor(x => x.Phone);
@@ -172,11 +178,11 @@ public class UserValidatorTests
     public void Given_UnknownStatus_When_Validated_Then_ShouldHaveError()
     {
         // Arrange
-        var user = UserTestData.GenerateValidUser();
+        DeveloperEvaluation.Domain.Entities.User user = UserTestData.GenerateValidUser();
         user.Status = UserStatus.Unknown;
 
         // Act
-        var result = _validator.TestValidate(user);
+        TestValidationResult<DeveloperEvaluation.Domain.Entities.User> result = this.validator.TestValidate(user);
 
         // Assert
         result.ShouldHaveValidationErrorFor(x => x.Status);
@@ -194,11 +200,11 @@ public class UserValidatorTests
     public void Given_NoneRole_When_Validated_Then_ShouldHaveError()
     {
         // Arrange
-        var user = UserTestData.GenerateValidUser();
+        DeveloperEvaluation.Domain.Entities.User user = UserTestData.GenerateValidUser();
         user.Role = UserRole.None;
 
         // Act
-        var result = _validator.TestValidate(user);
+        TestValidationResult<DeveloperEvaluation.Domain.Entities.User> result = this.validator.TestValidate(user);
 
         // Assert
         result.ShouldHaveValidationErrorFor(x => x.Role);

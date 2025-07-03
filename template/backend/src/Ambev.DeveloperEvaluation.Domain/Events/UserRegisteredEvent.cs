@@ -1,14 +1,18 @@
-using Ambev.DeveloperEvaluation.Domain.Entities;
+// <copyright file="UserRegisteredEvent.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace Ambev.DeveloperEvaluation.Domain.Events
 {
+    using Ambev.DeveloperEvaluation.Domain.Entities;
+
     public class UserRegisteredEvent
     {
-        public User User { get; }
-
         public UserRegisteredEvent(User user)
         {
-            User = user;
+            this.User = user;
         }
+
+        public User User { get; }
     }
 }

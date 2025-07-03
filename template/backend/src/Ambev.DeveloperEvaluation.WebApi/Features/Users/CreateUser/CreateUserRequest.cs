@@ -1,6 +1,10 @@
-﻿using Ambev.DeveloperEvaluation.Domain.Enums;
+﻿// <copyright file="CreateUserRequest.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace Ambev.DeveloperEvaluation.WebApi.Features.Users.CreateUser;
+
+using Ambev.DeveloperEvaluation.Domain.Enums;
 
 /// <summary>
 /// Represents a request to create a new user in the system.
