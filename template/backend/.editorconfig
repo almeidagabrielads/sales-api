@@ -19,12 +19,14 @@ dotnet_diagnostic.SA1413.severity = none
 dotnet_diagnostic.SA1516.severity = none
 dotnet_diagnostic.SA1505.severity = none
 dotnet_diagnostic.SA1508.severity = none
+dotnet_diagnostic.SA1028.severity = none
 
 # Relax file/type strictness but show as suggestion
 dotnet_diagnostic.SA1649.severity = none
 dotnet_diagnostic.SA1402.severity = none
 dotnet_diagnostic.SA1200.severity = none
 dotnet_diagnostic.SA1633.severity = none
+dotnet_diagnostic.SA1005.severity = none
 
 dotnet_diagnostic.CS1591.severity = none
 dotnet_diagnostic.CS1574.severity = none

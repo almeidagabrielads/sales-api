@@ -1,4 +1,6 @@
+using Ambev.DeveloperEvaluation.Common.Validation;
 using Ambev.DeveloperEvaluation.Domain.Common;
+using Ambev.DeveloperEvaluation.Domain.Validation;
 
 namespace Ambev.DeveloperEvaluation.Domain.Entities;
 
@@ -32,6 +34,17 @@ public class SaleItem : BaseEntity
         }
 
         this.IsCancelled = true;
+    }
+    
+    public ValidationResultDetail Validate()
+    {
+        SaleItemValidator validator = new SaleItemValidator();
+        FluentValidation.Results.ValidationResult result = validator.Validate(this);
+        return new ValidationResultDetail
+        {
+            IsValid = result.IsValid,
+            Errors = result.Errors.Select(e => (ValidationErrorDetail)e),
+        };
     }
 
     private decimal CalculateTotal()
