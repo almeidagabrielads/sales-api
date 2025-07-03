@@ -16,7 +16,12 @@ public class CreateSaleItemDto
     /// <summary>
     /// Gets or sets the external identifier of the product.
     /// </summary>
-    public string ProductExternalId { get; set; } = string.Empty;
+    public Guid ProductId { get; set; }
+    
+    /// <summary>
+    /// Gets or sets the name of the product.
+    /// </summary>
+    public string ProductName { get; set; } = string.Empty;
 
     /// <summary>
     /// Gets or sets the quantity of the product sold.

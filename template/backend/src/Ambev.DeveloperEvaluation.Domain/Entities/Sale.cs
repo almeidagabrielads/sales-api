@@ -6,31 +6,15 @@ namespace Ambev.DeveloperEvaluation.Domain.Entities;
 
 public class Sale : BaseEntity
 {
-    public Sale()
-    {
-        this.CreatedAt = DateTime.UtcNow;
-        this.Items = new();
-        this.Customer = new();
-        this.Branch = new();
-    }
-
     public string SaleNumber { get; set; } = string.Empty;
-
-    public Guid CustomerId { get; set; }
-
-    public virtual Customer Customer { get; set; }
-
-    public Guid BranchId { get; set; }
-
-    public virtual Branch Branch { get; set; }
-
-    public List<SaleItem> Items { get; set; }
-
-    public bool IsCancelled { get; set; }
-
     public DateTime CreatedAt { get; set; }
-
+    public Guid CustomerId { get; set; }
+    public string CustomerName { get; set; } = string.Empty;
+    public Guid BranchId { get; set; }
+    public string BranchName { get; set; } = string.Empty;
+    public virtual List<SaleItem> Items { get; set; } = new();
     public decimal TotalAmount { get; set; }
+    public bool IsCancelled { get; set; }
 
     public void Cancel()
     {

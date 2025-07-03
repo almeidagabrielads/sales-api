@@ -4,22 +4,13 @@ namespace Ambev.DeveloperEvaluation.Domain.Entities;
 
 public class SaleItem : BaseEntity
 {
-    public SaleItem()
-    {
-        this.Product = new();
-    }
-
-    public Guid ProductId { get; set; }
-
-    public virtual Product Product { get; set; }
-
+    public Guid ProductId { get; set; } = Guid.Empty;
+    public string ProductName { get; set; } = string.Empty;
     public int Quantity { get; set; }
-
+    public decimal UnitPrice { get; set; }
     public decimal Discount { get; set; }
-
-    public decimal Total => this.CalculateTotal();
-
-    public bool IsCancelled { get; set; }
+    public decimal Total { get; private set; }
+    public bool IsCancelled { get; set; } = false;
 
     public void ApplyDiscountRules()
     {
@@ -29,6 +20,8 @@ public class SaleItem : BaseEntity
             >= 4 => 0.10m,
             _ => 0.0m,
         };
+        
+        this.Total = this.CalculateTotal();
     }
 
     public void Cancel()
@@ -43,7 +36,7 @@ public class SaleItem : BaseEntity
 
     private decimal CalculateTotal()
     {
-        decimal gross = this.Quantity * this.Product.UnitPrice;
+        decimal gross = this.Quantity * this.UnitPrice;
         decimal discountAmount = gross * this.Discount;
         return gross - discountAmount;
     }

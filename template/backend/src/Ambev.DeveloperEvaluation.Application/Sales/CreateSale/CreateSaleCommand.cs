@@ -26,16 +26,26 @@ public class CreateSaleCommand : IRequest<CreateSaleResult>
     /// Gets or sets the unique sale number.
     /// </summary>
     public string SaleNumber { get; set; } = string.Empty;
-
+    
     /// <summary>
     /// Gets or sets the external identifier of the customer.
     /// </summary>
-    public string CustomerExternalId { get; set; } = string.Empty;
-
+    public Guid CustomerId { get; set; }
+    
+    /// <summary>
+    /// Gets or sets the name of the customer.
+    /// </summary>
+    public string CustomerName { get; set; } = string.Empty;
+    
     /// <summary>
     /// Gets or sets the external identifier of the branch where the sale occurred.
     /// </summary>
-    public string BranchExternalId { get; set; } = string.Empty;
+    public Guid BranchId { get; set; }
+    
+    /// <summary>
+    /// Gets or sets the name of the branch where the sale occurred.
+    /// </summary>
+    public string BranchName { get; set; } = string.Empty;
 
     /// <summary>
     /// Gets or sets the list of items in the sale.

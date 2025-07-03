@@ -26,4 +26,8 @@
     <ProjectReference Include="..\Ambev.DeveloperEvaluation.Common\Ambev.DeveloperEvaluation.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="Entities\Product.cs" />
+  </ItemGroup>
+
 </Project>
