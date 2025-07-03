@@ -3,6 +3,11 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER app
 WORKDIR /app
+
+ENV ASPNETCORE_URLS=http://+:8080
+HEALTHCHECK --interval=5s --timeout=3s \
+  CMD curl -f http://localhost:8080/health || exit 1
+  
 EXPOSE 8080
 EXPOSE 8081
 
