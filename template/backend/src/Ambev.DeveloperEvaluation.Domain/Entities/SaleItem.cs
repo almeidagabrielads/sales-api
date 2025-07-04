@@ -13,6 +13,7 @@ public class SaleItem : BaseEntity
     public decimal Discount { get; set; }
     public decimal Total { get; private set; }
     public bool IsCancelled { get; set; } = false;
+    public Guid SaleId { get; set; }
 
     public void ApplyDiscountRules()
     {

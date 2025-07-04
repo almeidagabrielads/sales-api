@@ -30,4 +30,17 @@ public class SaleRepository : ISaleRepository
         return await this.context.Sales
             .FirstOrDefaultAsync(s => s.SaleNumber == saleNumber, cancellationToken);
     }
+    
+    public async Task<Sale?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        return await this.context.Sales
+            .FirstOrDefaultAsync(s => s.Id == id, cancellationToken);
+    }
+    
+    public async Task<Sale> UpdateAsync(Sale sale, CancellationToken cancellationToken = default)
+    {
+        this.context.Sales.Update(sale);
+        await this.context.SaveChangesAsync(cancellationToken);
+        return sale;
+    }
 }
