@@ -1,8 +1,10 @@
 using System.Security.Claims;
 
 using Ambev.DeveloperEvaluation.Application.Sales.CreateSale;
+using Ambev.DeveloperEvaluation.Application.Sales.GetSale;
 using Ambev.DeveloperEvaluation.Application.Sales.UpdateSale;
 using Ambev.DeveloperEvaluation.WebApi.Features.Sales.CreateSale;
+using Ambev.DeveloperEvaluation.WebApi.Features.Sales.GetSale;
 using Ambev.DeveloperEvaluation.WebApi.Features.Sales.UpdateSale;
 
 using Microsoft.AspNetCore.Authorization;
@@ -82,7 +84,7 @@ public class SalesController : BaseController
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>The update sale details.</returns>
     [Authorize]
-    [HttpPost]
+    [HttpPut]
     [ProducesResponseType(typeof(ApiResponseWithData<CreateSaleResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status401Unauthorized)]
@@ -109,6 +111,45 @@ public class SalesController : BaseController
             Success = true,
             Message = "Sale updated successfully",
             Data = this._mapper.Map<UpdateSaleResponse>(response),
+        });
+    }
+    
+    // <summary>
+    // Retrieves a sale by their ID.
+    // </summary>
+    // <param name="id">The unique identifier of the sale.</param>
+    // <param name="cancellationToken">Cancellation token.</param>
+    // <returns>The sale details if found.</returns>
+    [Authorize]
+    [HttpGet("{id}")]
+    [ProducesResponseType(typeof(ApiResponseWithData<GetSaleResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status401Unauthorized)]
+    public async Task<IActionResult> GetUser([FromRoute] Guid id, CancellationToken cancellationToken)
+    {
+        if (!this.User.Identity?.IsAuthenticated ?? true)
+        {
+            return this.Unauthorized();
+        }
+        
+        GetSaleRequest request = new GetSaleRequest { Id = id };
+        GetSaleRequestValidator validator = new();
+        FluentValidation.Results.ValidationResult validationResult = await validator.ValidateAsync(request, cancellationToken);
+
+        if (!validationResult.IsValid)
+        {
+            return this.BadRequest(validationResult.Errors);
+        }
+
+        GetSaleCommand command = this._mapper.Map<GetSaleCommand>(request.Id);
+        GetSaleResult response = await this._mediator.Send(command, cancellationToken);
+
+        return this.Ok(new ApiResponseWithData<GetSaleResponse>
+        {
+            Success = true,
+            Message = "Sale retrieved successfully",
+            Data = this._mapper.Map<GetSaleResponse>(response),
         });
     }
 }
