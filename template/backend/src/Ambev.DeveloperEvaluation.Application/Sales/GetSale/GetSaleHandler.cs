@@ -12,16 +12,13 @@ namespace Ambev.DeveloperEvaluation.Application.Sales.GetSale;
 public class GetSaleHandler : IRequestHandler<GetSaleCommand, GetSaleResult>
 {
     private readonly ISaleRepository saleRepository;
-    private readonly ISaleItemRepository saleItemRepository;
     private readonly IMapper mapper;
     
     public GetSaleHandler(
         ISaleRepository saleRepository,
-        ISaleItemRepository saleItemRepository,
         IMapper mapper)
     {
         this.saleRepository = saleRepository;
-        this.saleItemRepository = saleItemRepository;
         this.mapper = mapper;
     }
 
