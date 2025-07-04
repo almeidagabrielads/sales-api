@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   ambev.developerevaluation.webapi:
     container_name: ambev_developer_evaluation_webapi
@@ -45,6 +43,7 @@ services:
       - "6379"
   
   ambev.developerevaluation.migration.runner:
+    container_name: ambev_developer_evaluation_migration_runner
     build:
       context: .
       dockerfile: DockerfileMigrations
@@ -54,9 +53,10 @@ services:
       - .:/app
     working_dir: /app/src/Ambev.DeveloperEvaluation.ORM
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Development    
     
   ambev.developerevaluation.tests.functional:
+    container_name: ambev_developer_evaluation_tests_functional
     build:
       context: .
       dockerfile: tests/Ambev.DeveloperEvaluation.Functional/Dockerfile
@@ -64,3 +64,19 @@ services:
       - ambev.developerevaluation.webapi
     environment:
       ASPNETCORE_URLS: http://+:80
+      
+  ambev.developerevaluation.tests.unit:
+    container_name: ambev_developer_evaluation_tests_unit
+    build:
+      context: .
+      dockerfile: tests/Ambev.DeveloperEvaluation.Unit/DockerfileUnit
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      
+  ambev.developerevaluation.tests.integration:
+    container_name: ambev_developer_evaluation_tests_integration
+    build:
+      context: .
+      dockerfile: tests/Ambev.DeveloperEvaluation.Integration/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development

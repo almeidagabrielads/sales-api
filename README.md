@@ -5,9 +5,7 @@ This project was developed using Clean Architecture, Domain-Driven Design (DDD),
 
 ---
 
-## Implementation
-
-### Technologies Used
+## Technologies Used
 
 - .NET 8.0
 - C#
@@ -19,7 +17,101 @@ This project was developed using Clean Architecture, Domain-Driven Design (DDD),
 - xUnit + NSubstitute
 - Swagger
 
-### Project Structure
+## Project Configuration
+
+### Prerequisites
+
+Make sure you have installed:
+
+- [.NET SDK 8.0+](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
+- [Docker + Docker Compose](https://docs.docker.com/compose/install/)
+
+### Clone the project
+
+```bash
+git clone https://github.com/almeidagabrielads/sales-api.git
+cd sales-api
+```
+
+## Running the project
+
+### Running via Docker Compose
+```bash
+docker-compose up -d --build
+```
+
+### The API will be available at:
+
+```bash
+http://localhost:8080/swagger
+```
+
+### To disconnect and remove volumes:
+```bash
+docker-compose down -v
+```
+
+## Running Unit Tests
+
+### To run the unit test suite:
+```bash
+docker-compose run --rm ambev_developer_evaluation_tests_unit
+```
+
+### To run with exposed ports and interactive logs:
+```bash
+docker-compose run --rm --service-ports ambev_developer_evaluation_tests_unit
+```
+
+## Running Functional Tests
+
+### To run the functional test suite:
+```bash
+docker-compose run --rm ambev_developer_evaluation_tests_functional
+```
+
+### To run with exposed ports and interactive logs:
+```bash
+docker-compose run --rm --service-ports ambev_developer_evaluation_tests_functional
+```
+
+## Running Integration Tests
+
+### To run the functional test suite:
+```bash
+docker-compose run --rm ambev_developer_evaluation_tests_integration
+```
+
+### To run with exposed ports and interactive logs:
+```bash
+docker-compose run --rm --service-ports ambev_developer_evaluation_tests_integration
+```
+
+## Running Migrations
+
+### To apply Entity Framework Core migrations to the PostgreSQL database:
+
+```bash
+docker-compose run --rm ambev_developer_evaluation_migration_runner
+```
+
+## Container Structure
+
+### To apply Entity Framework Core migrations to the PostgreSQL database:
+
+```bash
+| Service                                       | Description                    |
+| --------------------------------------------- | ------------------------------ |
+|  ambev_developer_evaluation_webapi            | Main .NET Web API              |
+|  ambev_developer_evaluation_database          | PostgreSQL database            |
+|  ambev_developer_evaluation_nosql             | MongoDB for event storage      |
+|  ambev_developer_evaluation_tests_unit        | Unit test runner (xUnit)       |
+|  ambev_developer_evaluation_tests_functional  | Functional test runner (xUnit) |
+|  ambev_developer_evaluation_tests_integration | Integration test runner (xUnit)|
+|  ambev_developer_evaluation_migration_runner  | EF Core migration runner       |
+```
+
+## Project Structure
 
 ```bash
 src/
@@ -38,16 +130,20 @@ tests/
 
 ## Status
 
-- [x] Setup inicial
-- [x] Modelos de domínio
-- [x] Handlers e validações
-- [x] Controllers e endpoints
-- [ ] Testes
-- [ ] Documentação
+- [x] Initial setup
+- [x] Domain models
+- [x] Handlers and validations
+- [x] Controllers and endpoints
+- [x] Unit tests
+- [ ] Functional tests
+- [ ] Integration tests
+- [ ] Documentation
 
 ## License
 
 This project is for technical evaluation purposes only.
+
+---
 
 ## Challenge Instructions
 **The test below will have up to 7 calendar days to be delivered from the date of receipt of this manual.**

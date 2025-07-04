@@ -16,6 +16,7 @@ public static class SaleItemTestData
     /// </summary>
     private static readonly Faker<SaleItem> SaleItemFaker = new Faker<SaleItem>()
         .RuleFor(i => i.ProductExternalId, f => f.Random.Guid())
+        .RuleFor(i => i.SaleId, f => f.Random.Guid())
         .RuleFor(i => i.Quantity, f => f.Random.Int(1, 10))
         .RuleFor(i => i.UnitPrice, f => f.Random.Decimal(10, 100))
         .RuleFor(i => i.Discount, f => f.Random.Decimal(0, 10))
