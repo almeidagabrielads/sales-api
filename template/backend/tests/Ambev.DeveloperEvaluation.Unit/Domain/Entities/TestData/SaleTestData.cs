@@ -13,8 +13,7 @@ using Bogus;
 public static class SaleTestData
 {
     private static readonly Faker<SaleItem> SaleItemFaker = new Faker<SaleItem>()
-        .RuleFor(i => i.ProductId, f => f.Random.Guid())
-        .RuleFor(i => i.ProductName, f => f.Commerce.ProductName())
+        .RuleFor(i => i.ProductExternalId, f => f.Random.Guid())
         .RuleFor(i => i.Quantity, f => f.Random.Int(1, 10))
         .RuleFor(i => i.UnitPrice, f => f.Random.Decimal(10, 100))
         .RuleFor(i => i.Discount, f => f.Random.Decimal(0, 10));
@@ -22,10 +21,8 @@ public static class SaleTestData
     private static readonly Faker<Sale> SaleFaker = new Faker<Sale>()
         .RuleFor(s => s.SaleNumber, f => f.Random.AlphaNumeric(6))
         .RuleFor(s => s.CreatedAt, f => f.Date.Recent())
-        .RuleFor(s => s.CustomerId, f => f.Random.Guid())
-        .RuleFor(s => s.CustomerName, f => f.Name.FullName())
-        .RuleFor(s => s.BranchId, f => f.Random.Guid())
-        .RuleFor(s => s.BranchName, f => f.Company.CompanyName())
+        .RuleFor(s => s.CustomerExternalId, f => f.Random.Guid())
+        .RuleFor(s => s.BranchExternalId, f => f.Random.Guid())
         .RuleFor(s => s.IsCancelled, false)
         .RuleFor(s => s.Items, f => SaleItemFaker.Generate(f.Random.Int(1, 3)));
 
@@ -49,10 +46,8 @@ public static class SaleTestData
         {
             SaleNumber = string.Empty,
             CreatedAt = DateTime.MinValue,
-            CustomerId = Guid.Empty,
-            CustomerName = string.Empty,
-            BranchId = Guid.Empty,
-            BranchName = string.Empty,
+            CustomerExternalId = Guid.Empty,
+            BranchExternalId = Guid.Empty,
             Items = new List<SaleItem>() // Empty list = invalid
         };
     }
@@ -74,8 +69,7 @@ public static class SaleTestData
     {
         return new SaleItem
         {
-            ProductId = Guid.Empty,
-            ProductName = string.Empty,
+            ProductExternalId = Guid.Empty,
             Quantity = 0,
             UnitPrice = -10,
             Discount = -5
