@@ -13,12 +13,15 @@ using Bogus;
 public static class SaleTestData
 {
     private static readonly Faker<SaleItem> SaleItemFaker = new Faker<SaleItem>()
+        .RuleFor(i => i.Id, f => f.Random.Guid())
         .RuleFor(i => i.ProductExternalId, f => f.Random.Guid())
-        .RuleFor(i => i.Quantity, f => f.Random.Int(1, 10))
+        .RuleFor(i => i.Quantity, f => f.Random.Int(1, 15))
         .RuleFor(i => i.UnitPrice, f => f.Random.Decimal(10, 100))
-        .RuleFor(i => i.Discount, f => f.Random.Decimal(0, 10));
+        .RuleFor(i => i.Discount, (f, i) => f.Random.Decimal(0, i.UnitPrice * 0.5m)) 
+        .RuleFor(i => i.Total, (f, i) => i.Quantity * (i.UnitPrice - i.Discount));
 
     private static readonly Faker<Sale> SaleFaker = new Faker<Sale>()
+        .RuleFor(s => s.Id, f => f.Random.Guid())
         .RuleFor(s => s.SaleNumber, f => f.Random.AlphaNumeric(6))
         .RuleFor(s => s.CreatedAt, f => f.Date.Recent())
         .RuleFor(s => s.CustomerExternalId, f => f.Random.Guid())
@@ -32,7 +35,15 @@ public static class SaleTestData
     /// <returns>A valid Sale entity.</returns>
     public static Sale GenerateValidSale()
     {
-        return SaleFaker.Generate();
+        var sale = SaleFaker.Generate();
+        foreach (var item in sale.Items)
+        {
+            item.SaleId = sale.Id; 
+            item.ApplyDiscountRules();
+        }
+
+        sale.RecalculateTotal();
+        return sale;
     }
 
     /// <summary>

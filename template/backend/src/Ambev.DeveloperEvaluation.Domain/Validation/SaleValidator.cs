@@ -10,6 +10,10 @@ public class SaleValidator : AbstractValidator<Sale>
 {
     public SaleValidator()
     {
+        this.RuleFor(sale => sale.Id)
+            .NotEmpty()
+            .WithMessage("Sale ID must not be empty.");
+        
         this.RuleFor(sale => sale.SaleNumber)
             .NotEmpty()
             .WithMessage("Sale number must not be empty.")

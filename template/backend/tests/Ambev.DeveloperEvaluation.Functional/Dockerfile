@@ -26,7 +26,7 @@ RUN chmod +x /usr/local/bin/wait-for.sh
 
 # 4) Entry point: aguarda a API e executa os testes
 ENTRYPOINT ["bash", "-lc", "\
-  /usr/local/bin/wait-for.sh webapi:8080 -- \
+  /usr/local/bin/wait-for.sh ambev.developerevaluation.webapi:8080 -- \
   dotnet test tests/Ambev.DeveloperEvaluation.Functional/Ambev.DeveloperEvaluation.Functional.csproj \
     -c Release --logger \"console;verbosity=detailed\" \
 "]
