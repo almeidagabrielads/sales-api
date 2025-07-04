@@ -1,0 +1,21 @@
+<Project>
+  <ItemGroup>
+    <!-- Microsoft analyzers -->
+    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="8.0.0" PrivateAssets="all" />
+
+    <!-- StyleCop analyzers -->
+    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.435" PrivateAssets="all" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <!-- Treat all warnings as errors globally -->
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <!-- Enforce code style rules defined in .editorconfig -->
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Ensure the .editorconfig is included for analyzers -->
+    <AdditionalFiles Include=".editorconfig" />
+  </ItemGroup>
+</Project>

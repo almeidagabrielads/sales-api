@@ -1,0 +1,38 @@
+﻿[*.cs]
+
+# IDE0290: Use primary constructor
+csharp_style_prefer_primary_constructors = false
+# Reduce XML doc noise
+dotnet_diagnostic.SA1600.severity = none
+dotnet_diagnostic.SA1601.severity = none
+dotnet_diagnostic.SA1602.severity = none
+dotnet_diagnostic.SA1611.severity = none
+dotnet_diagnostic.SA1615.severity = none
+dotnet_diagnostic.SA1618.severity = none
+dotnet_diagnostic.SA1616.severity = none
+dotnet_diagnostic.SA1309.severity = none
+
+# Ignore spacing issues with C# 12 shorthand
+dotnet_diagnostic.SA1010.severity = none
+dotnet_diagnostic.SA1003.severity = none
+dotnet_diagnostic.SA1413.severity = none
+dotnet_diagnostic.SA1516.severity = none
+dotnet_diagnostic.SA1505.severity = none
+dotnet_diagnostic.SA1508.severity = none
+dotnet_diagnostic.SA1028.severity = none
+
+# Relax file/type strictness but show as suggestion
+dotnet_diagnostic.SA1649.severity = none
+dotnet_diagnostic.SA1402.severity = none
+dotnet_diagnostic.SA1200.severity = none
+dotnet_diagnostic.SA1633.severity = none
+dotnet_diagnostic.SA1005.severity = none
+
+dotnet_diagnostic.CS1591.severity = none
+dotnet_diagnostic.CS1574.severity = none
+dotnet_diagnostic.CS1572.severity = none
+
+
+# Optional: style fixes that make team code more readable
+dotnet_sort_system_directives_first = true
+dotnet_separate_import_directive_groups = true
