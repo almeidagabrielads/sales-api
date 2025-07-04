@@ -17,12 +17,8 @@ public class SaleItemConfiguration : IEntityTypeConfiguration<SaleItem>
                .HasColumnType("uuid")
                .HasDefaultValueSql("gen_random_uuid()");
         
-       builder.Property(si => si.ProductId)
+       builder.Property(si => si.ProductExternalId)
            .HasColumnType("uuid")
-           .IsRequired();
-        
-       builder.Property(si => si.ProductName)
-           .HasMaxLength(100)
            .IsRequired();
        
        builder.Property(si => si.Quantity)

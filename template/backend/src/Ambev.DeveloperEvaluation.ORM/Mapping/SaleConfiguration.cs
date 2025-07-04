@@ -24,31 +24,24 @@ public class SaleConfiguration : IEntityTypeConfiguration<Sale>
         builder.Property(s => s.CreatedAt)
                .IsRequired();
         
-        builder.Property(s => s.CustomerId)
+        builder.Property(s => s.CustomerExternalId)
                .IsRequired()
                .HasColumnType("uuid");
         
-        builder.Property(s => s.CustomerName)
-               .IsRequired()
-               .HasMaxLength(100);
-        
-        builder.Property(s => s.BranchId)
+        builder.Property(s => s.BranchExternalId)
                .IsRequired()
                .HasColumnType("uuid");
-        
-        builder.Property(s => s.BranchName)
-               .IsRequired()
-               .HasMaxLength(100);
 
-        builder.HasMany(s => s.Items)
-               .WithOne()
-               .OnDelete(DeleteBehavior.Cascade);
-        
         builder.Property(s => s.TotalAmount)
                .HasColumnType("decimal(18,2)")
                .IsRequired();
         
         builder.Property(s => s.IsCancelled)
                .IsRequired();
+        
+        builder.HasMany(s => s.Items)
+               .WithOne(si => si.Sale)
+               .HasForeignKey(si => si.SaleId)
+               .OnDelete(DeleteBehavior.Cascade);
     }
 }

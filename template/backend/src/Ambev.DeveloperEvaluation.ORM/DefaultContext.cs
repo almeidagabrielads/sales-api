@@ -1,4 +1,6 @@
-﻿namespace Ambev.DeveloperEvaluation.ORM;
+﻿using Ambev.DeveloperEvaluation.ORM.Mapping;
+
+namespace Ambev.DeveloperEvaluation.ORM;
 
 using System.Reflection;
 
@@ -21,7 +23,9 @@ public class DefaultContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+        modelBuilder.ApplyConfiguration(new UserConfiguration());
+        modelBuilder.ApplyConfiguration(new SaleConfiguration());
+        modelBuilder.ApplyConfiguration(new SaleItemConfiguration());
         base.OnModelCreating(modelBuilder);
     }
 }

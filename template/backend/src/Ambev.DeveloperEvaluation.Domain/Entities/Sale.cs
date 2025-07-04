@@ -8,10 +8,8 @@ public class Sale : BaseEntity
 {
     public string SaleNumber { get; set; } = string.Empty;
     public DateTime CreatedAt { get; set; }
-    public Guid CustomerId { get; set; }
-    public string CustomerName { get; set; } = string.Empty;
-    public Guid BranchId { get; set; }
-    public string BranchName { get; set; } = string.Empty;
+    public Guid CustomerExternalId { get; set; }
+    public Guid BranchExternalId { get; set; }
     public virtual List<SaleItem> Items { get; set; } = new();
     public decimal TotalAmount { get; set; }
     public bool IsCancelled { get; set; }
@@ -31,6 +29,22 @@ public class Sale : BaseEntity
     {
         this.TotalAmount = this.Items?.Sum(i => i.Total) ?? 0m;
     }
+    
+    public void UpdateDetails(
+        string newSaleNumber,
+        Guid newCustomerId,
+        Guid newBranchId,
+        List<SaleItem> newItems)
+    {
+        this.SaleNumber = newSaleNumber;
+        this.CustomerExternalId = newCustomerId;
+        this.BranchExternalId = newBranchId;
+
+        this.Items.Clear();
+        this.Items.AddRange(newItems);
+        this.Items.ForEach(i => i.ApplyDiscountRules());
+        this.RecalculateTotal();
+    }
 
     public ValidationResultDetail Validate()
     {
@@ -41,25 +55,5 @@ public class Sale : BaseEntity
             IsValid = result.IsValid,
             Errors = result.Errors.Select(e => (ValidationErrorDetail)e),
         };
-    }
-    
-    public void UpdateDetails(
-        string newSaleNumber,
-        Guid newCustomerId,
-        string newCustomerName,
-        Guid newBranchId,
-        string newBranchName,
-        List<SaleItem> newItems)
-    {
-        this.SaleNumber = newSaleNumber;
-        this.CustomerId = newCustomerId;
-        this.CustomerName = newCustomerName;
-        this.BranchId = newBranchId;
-        this.BranchName = newBranchName;
-
-        this.Items.Clear();
-        this.Items.AddRange(newItems);
-        this.Items.ForEach(i => i.ApplyDiscountRules());
-        this.RecalculateTotal();
     }
 }
