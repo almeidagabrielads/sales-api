@@ -31,4 +31,23 @@ public class SaleItemRepository : ISaleItemRepository
         await this.context.SaveChangesAsync(cancellationToken);
         return saleItems;
     }
+    
+    public async Task<bool> DeleteRangeAsync(List<SaleItem> items, CancellationToken cancellationToken = default)
+    {
+        var ids = items.Select(i => i.Id).ToList();
+        var existingItems = await this.context
+            .SaleItems
+            .Where(i => ids.Contains(i.Id))
+            .ToListAsync(cancellationToken);
+
+        var missingIds = ids.Except(existingItems.Select(i => i.Id)).ToList();
+        if (missingIds.Any())
+        {
+            return false;
+        }
+
+        this.context.RemoveRange(existingItems);
+        await this.context.SaveChangesAsync(cancellationToken);
+        return true;
+    }
 }

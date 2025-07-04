@@ -40,8 +40,8 @@ tests/
 
 - [x] Setup inicial
 - [x] Modelos de domínio
-- [ ] Handlers e validações
-- [ ] Controllers e endpoints
+- [x] Handlers e validações
+- [x] Controllers e endpoints
 - [ ] Testes
 - [ ] Documentação
 
