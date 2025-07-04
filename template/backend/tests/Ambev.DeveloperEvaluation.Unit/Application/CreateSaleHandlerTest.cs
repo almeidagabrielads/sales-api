@@ -56,16 +56,13 @@ public class CreateSaleHandlerTest
         {
             Id = Guid.NewGuid(),
             SaleNumber = command.SaleNumber,
-            CustomerId = command.CustomerId,
-            CustomerName = command.CustomerName,
-            BranchId = command.BranchId,
-            BranchName = command.BranchName,
+            CustomerExternalId = command.CustomerExternalId,
+            BranchExternalId = command.BranchExternalId,
             CreatedAt = DateTime.UtcNow,
             IsCancelled = false,
             Items = command.Items.Select(i => new SaleItem
             {
-                ProductId = i.ProductId,
-                ProductName = i.ProductName,
+                ProductExternalId = i.ProductExternalId,
                 Quantity = i.Quantity
             }).ToList()
         };

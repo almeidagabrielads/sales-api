@@ -24,29 +24,19 @@ public class CreateSaleCommandValidator : AbstractValidator<CreateSaleCommand>
         this.RuleFor(sale => sale.SaleNumber)
             .NotEmpty().WithMessage("SaleNumber is required.");
 
-        this.RuleFor(sale => sale.CustomerId)
+        this.RuleFor(sale => sale.CustomerExternalId)
             .NotEmpty().WithMessage("CustomerId is required.");
-        
-        this.RuleFor(sale => sale.CustomerName)
-            .NotEmpty().WithMessage("CustomerName is required.");
 
-        this.RuleFor(sale => sale.BranchId)
+        this.RuleFor(sale => sale.BranchExternalId)
             .NotEmpty().WithMessage("BranchId is required.");
-        
-        this.RuleFor(sale => sale.BranchName)
-            .NotEmpty().WithMessage("BranchName is required.");
 
         this.RuleFor(sale => sale.Items)
             .NotEmpty().WithMessage("At least one sale item is required.");
 
         this.RuleForEach(sale => sale.Items).ChildRules(item =>
         {
-            item.RuleFor(x => x.ProductId)
+            item.RuleFor(x => x.ProductExternalId)
                 .NotEmpty().WithMessage("ProductId is required.");
-            
-            item.RuleFor(x => x.ProductName)
-                .NotEmpty()
-                .WithMessage("ProductName is required.");
 
             item.RuleFor(x => x.Quantity)
                 .InclusiveBetween(1, 20)
