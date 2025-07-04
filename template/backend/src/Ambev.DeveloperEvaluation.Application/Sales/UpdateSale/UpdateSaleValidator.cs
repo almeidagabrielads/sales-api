@@ -12,17 +12,11 @@ public class UpdateSaleValidator : AbstractValidator<UpdateSaleCommand>
         this.RuleFor(sale => sale.NewSaleNumber)
             .NotEmpty().WithMessage("NewSaleNumber is required.");
 
-        this.RuleFor(sale => sale.NewCustomerId)
+        this.RuleFor(sale => sale.NewCustomerExternalId)
             .NotEmpty().WithMessage("NewCustomerId is required.");
-        
-        this.RuleFor(sale => sale.NewCustomerName)
-            .NotEmpty().WithMessage("NewCustomerName is required.");
 
-        this.RuleFor(sale => sale.NewBranchId)
+        this.RuleFor(sale => sale.NewBranchExternalId)
             .NotEmpty().WithMessage("NewBranchId is required.");
-        
-        this.RuleFor(sale => sale.NewBranchName)
-            .NotEmpty().WithMessage("NewBranchName is required.");
 
         this.RuleFor(sale => sale.NewItems)
             .NotEmpty().WithMessage("At least one sale item is required.");
