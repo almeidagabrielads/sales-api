@@ -28,7 +28,7 @@ public class GetSaleHandler : IRequestHandler<GetSaleCommand, GetSaleResult>
     public async Task<GetSaleResult> Handle(GetSaleCommand request, CancellationToken cancellationToken)
     {
         GetSaleValidator validator = new GetSaleValidator();
-        FluentValidation.Results.ValidationResult validationResult = await validator.ValidateAsync(request);
+        FluentValidation.Results.ValidationResult validationResult = await validator.ValidateAsync(request, cancellationToken);
 
         if (!validationResult.IsValid)
         {
