@@ -95,10 +95,8 @@ public class SaleTests
         Sale sale = new Sale
         {
             SaleNumber = string.Empty,
-            CustomerId = Guid.Empty,
-            BranchId = Guid.Empty,
-            CustomerName = string.Empty,
-            BranchName = string.Empty,
+            CustomerExternalId = Guid.Empty,
+            BranchExternalId = Guid.Empty,
             Items = new(),
             CreatedAt = DateTime.MinValue
         };

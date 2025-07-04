@@ -85,40 +85,12 @@ public class SaleItemValidatorTests
     {
         // Arrange
         SaleItem item = SaleItemTestData.GenerateValidSaleItem();
-        item.ProductId = Guid.Empty;
+        item.ProductExternalId = Guid.Empty;
 
         // Act
         TestValidationResult<SaleItem> result = this.validator.TestValidate(item);
 
         // Assert
-        result.ShouldHaveValidationErrorFor(x => x.ProductId);
-    }
-
-    [Fact(DisplayName = "Given empty product name When validated Then should return validation error")]
-    public void Given_EmptyProductName_When_Validated_Then_ShouldReturnError()
-    {
-        // Arrange
-        SaleItem item = SaleItemTestData.GenerateValidSaleItem();
-        item.ProductName = string.Empty;
-
-        // Act
-        TestValidationResult<SaleItem> result = this.validator.TestValidate(item);
-
-        // Assert
-        result.ShouldHaveValidationErrorFor(x => x.ProductName);
-    }
-
-    [Fact(DisplayName = "Given too long product name When validated Then should return validation error")]
-    public void Given_TooLongProductName_When_Validated_Then_ShouldReturnError()
-    {
-        // Arrange
-        SaleItem item = SaleItemTestData.GenerateValidSaleItem();
-        item.ProductName = new string('A', 101); // 101 chars
-
-        // Act
-        TestValidationResult<SaleItem> result = this.validator.TestValidate(item);
-
-        // Assert
-        result.ShouldHaveValidationErrorFor(x => x.ProductName);
+        result.ShouldHaveValidationErrorFor(x => x.ProductExternalId);
     }
 }

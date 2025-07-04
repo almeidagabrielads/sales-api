@@ -17,22 +17,12 @@ public class UpdateSaleCommand : IRequest<UpdateSaleResult>
     /// <summary>
     /// Gets or sets the external identifier of the customer.
     /// </summary>
-    public Guid NewCustomerId { get; set; }
-    
-    /// <summary>
-    /// Gets or sets the name of the customer.
-    /// </summary>
-    public string NewCustomerName { get; set; } = string.Empty;
+    public Guid NewCustomerExternalId { get; set; }
     
     /// <summary>
     /// Gets or sets the external identifier of the branch where the sale occurred.
     /// </summary>
-    public Guid NewBranchId { get; set; }
-    
-    /// <summary>
-    /// Gets or sets the name of the branch where the sale occurred.
-    /// </summary>
-    public string NewBranchName { get; set; } = string.Empty;
+    public Guid NewBranchExternalId { get; set; }
 
     /// <summary>
     /// Gets or sets the list of items in the sale.

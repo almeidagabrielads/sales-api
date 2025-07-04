@@ -17,14 +17,11 @@ public static class CreateSaleHandlerTestData
         /// </summary>
         private static readonly Faker<CreateSaleCommand> CreateSaleHandlerFaker = new Faker<CreateSaleCommand>("pt_BR")
             .RuleFor(s => s.SaleNumber, f => f.Random.AlphaNumeric(5))
-            .RuleFor(s => s.CustomerId, f => f.Random.Guid())
-            .RuleFor(s => s.CustomerName, f => f.Person.FullName)
-            .RuleFor(s => s.BranchId, f => f.Random.Guid())
-            .RuleFor(s => s.BranchName, f => f.Company.CompanyName())
+            .RuleFor(s => s.CustomerExternalId, f => f.Random.Guid())
+            .RuleFor(s => s.BranchExternalId, f => f.Random.Guid())
             .RuleFor(s => s.Items, f => f.Make(f.Random.Int(1, 5), () => new CreateSaleItemDto
             {
-                ProductId = f.Random.Guid(),
-                ProductName = f.Commerce.ProductName(),
+                ProductExternalId = f.Random.Guid(),
                 Quantity = f.Random.Int(1, 10)
             }));
     

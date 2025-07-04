@@ -22,26 +22,14 @@ public class SaleValidator : AbstractValidator<Sale>
             .LessThanOrEqualTo(DateTime.UtcNow)
             .WithMessage("Sale date cannot be in the future.");
         
-        this.RuleFor(sale => sale.CustomerId)
+        this.RuleFor(sale => sale.CustomerExternalId)
             .NotEmpty()
             .WithMessage("Customer ID must not be empty.");
         
-        this.RuleFor(sale => sale.CustomerName)
-            .NotEmpty()
-            .WithMessage("Customer name must not be empty.")
-            .MaximumLength(100)
-            .WithMessage("Customer name must not exceed 100 characters.");
-        
-        this.RuleFor(sale => sale.BranchId)
+        this.RuleFor(sale => sale.BranchExternalId)
             .NotEmpty()
             .WithMessage("Branch ID must not be empty.");
         
-        this.RuleFor(sale => sale.BranchName)
-            .NotEmpty()
-            .WithMessage("Branch name must not be empty.")
-            .MaximumLength(100)
-            .WithMessage("Branch name must not exceed 100 characters.");
-
         this.RuleFor(sale => sale.Items)
             .NotEmpty()
             .WithMessage("At least one sale item is required.");

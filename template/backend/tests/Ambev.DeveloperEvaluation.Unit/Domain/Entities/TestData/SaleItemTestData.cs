@@ -15,8 +15,7 @@ public static class SaleItemTestData
     /// Faker for generating valid SaleItem instances with randomized data.
     /// </summary>
     private static readonly Faker<SaleItem> SaleItemFaker = new Faker<SaleItem>()
-        .RuleFor(i => i.ProductId, f => f.Random.Guid())
-        .RuleFor(i => i.ProductName, f => f.Commerce.ProductName())
+        .RuleFor(i => i.ProductExternalId, f => f.Random.Guid())
         .RuleFor(i => i.Quantity, f => f.Random.Int(1, 10))
         .RuleFor(i => i.UnitPrice, f => f.Random.Decimal(10, 100))
         .RuleFor(i => i.Discount, f => f.Random.Decimal(0, 10))
@@ -40,8 +39,7 @@ public static class SaleItemTestData
     {
         return new SaleItem
         {
-            ProductId = Guid.Empty,
-            ProductName = string.Empty,
+            ProductExternalId = Guid.Empty,
             Quantity = 0,
             UnitPrice = -1,
             Discount = -5,

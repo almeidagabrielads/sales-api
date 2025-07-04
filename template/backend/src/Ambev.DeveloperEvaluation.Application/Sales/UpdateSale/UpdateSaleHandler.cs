@@ -42,7 +42,7 @@ public class UpdateSaleHandler : IRequestHandler<UpdateSaleCommand, UpdateSaleRe
         }
         
         List<SaleItem> items = this.mapper.Map<List<SaleItem>>(command.NewItems);
-        existingSale.UpdateDetails(command.NewSaleNumber, command.NewCustomerId, command.NewCustomerName, command.NewBranchId, command.NewBranchName, items);
+        existingSale.UpdateDetails(command.NewSaleNumber, command.NewCustomerExternalId, command.NewBranchExternalId, items);
         
         Sale updatedSale = await this.saleRepository.UpdateAsync(existingSale, cancellationToken);
         updatedSale.Items.ForEach(i => i.ApplyDiscountRules());

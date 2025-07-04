@@ -43,4 +43,20 @@ public class SaleRepository : ISaleRepository
         await this.context.SaveChangesAsync(cancellationToken);
         return sale;
     }
+
+    public async Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        Sale? sale = await this.context.Sales
+            .Include(s => s.Items)
+            .FirstOrDefaultAsync(s => s.Id == id, cancellationToken);
+        
+        if (sale == null)
+        {
+            return false;
+        }
+        
+        this.context.Sales.Remove(sale);
+        await this.context.SaveChangesAsync(cancellationToken);
+        return true;
+    }
 }

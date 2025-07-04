@@ -8,15 +8,9 @@ public class SaleItemValidator : AbstractValidator<SaleItem>
 {
     public SaleItemValidator()
     {
-        this.RuleFor(saleItem => saleItem.ProductId)
+        this.RuleFor(saleItem => saleItem.ProductExternalId)
             .NotEmpty()
             .WithMessage("Product ID cannot be empty.");
-        
-        this.RuleFor(saleItem => saleItem.ProductName)
-            .NotEmpty()
-            .WithMessage("Product name cannot be empty.")
-            .MaximumLength(100)
-            .WithMessage("Product name cannot exceed 100 characters.");
         
         this.RuleFor(i => i.Quantity)
             .InclusiveBetween(1, 20)

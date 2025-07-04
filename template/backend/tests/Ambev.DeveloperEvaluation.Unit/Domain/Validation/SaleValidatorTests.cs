@@ -67,29 +67,13 @@ public class SaleValidatorTests
     {
         // Arrange
         Sale sale = SaleTestData.GenerateValidSale();
-        sale.CustomerId = Guid.Empty;
+        sale.CustomerExternalId = Guid.Empty;
 
         // Act
         TestValidationResult<Sale> result = this.validator.TestValidate(sale);
 
         // Assert
-        result.ShouldHaveValidationErrorFor(x => x.CustomerId);
-    }
-
-    [Theory(DisplayName = "Given invalid customer name When validated Then should return validation error")]
-    [InlineData("")]
-    [InlineData("ThisCustomerNameIsWayTooLongAndShouldCauseAValidationErrorBecauseItExceedsOneHundredCharacters1234567890")]
-    public void Given_InvalidCustomerName_When_Validated_Then_ShouldReturnError(string customerName)
-    {
-        // Arrange
-        Sale sale = SaleTestData.GenerateValidSale();
-        sale.CustomerName = customerName;
-
-        // Act
-        TestValidationResult<Sale> result = this.validator.TestValidate(sale);
-
-        // Assert
-        result.ShouldHaveValidationErrorFor(x => x.CustomerName);
+        result.ShouldHaveValidationErrorFor(x => x.CustomerExternalId);
     }
 
     [Fact(DisplayName = "Given empty branch ID When validated Then should return validation error")]
@@ -97,29 +81,13 @@ public class SaleValidatorTests
     {
         // Arrange
         Sale sale = SaleTestData.GenerateValidSale();
-        sale.BranchId = Guid.Empty;
+        sale.BranchExternalId = Guid.Empty;
 
         // Act
         TestValidationResult<Sale> result = this.validator.TestValidate(sale);
 
         // Assert
-        result.ShouldHaveValidationErrorFor(x => x.BranchId);
-    }
-
-    [Theory(DisplayName = "Given invalid branch name When validated Then should return validation error")]
-    [InlineData("")]
-    [InlineData("ThisBranchNameIsWayTooLongAndShouldTriggerValidationErrorBecauseItExceedsTheMaximumLimitOf100Characters123456")]
-    public void Given_InvalidBranchName_When_Validated_Then_ShouldReturnError(string branchName)
-    {
-        // Arrange
-        Sale sale = SaleTestData.GenerateValidSale();
-        sale.BranchName = branchName;
-
-        // Act
-        TestValidationResult<Sale> result = this.validator.TestValidate(sale);
-
-        // Assert
-        result.ShouldHaveValidationErrorFor(x => x.BranchName);
+        result.ShouldHaveValidationErrorFor(x => x.BranchExternalId);
     }
 
     [Fact(DisplayName = "Given no sale items When validated Then should return validation error")]
