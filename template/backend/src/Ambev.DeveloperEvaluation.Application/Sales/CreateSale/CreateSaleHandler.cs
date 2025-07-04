@@ -1,7 +1,3 @@
-// <copyright file="CreateSaleHandler.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
 namespace Ambev.DeveloperEvaluation.Application.Sales.CreateSale;
 
 using Ambev.DeveloperEvaluation.Domain.Entities;
@@ -16,13 +12,16 @@ using MediatR;
 public class CreateSaleHandler : IRequestHandler<CreateSaleCommand, CreateSaleResult>
 {
     private readonly ISaleRepository saleRepository;
+    private readonly ISaleItemRepository saleItemRepository;
     private readonly IMapper mapper;
 
     public CreateSaleHandler(
         ISaleRepository saleRepository,
+        ISaleItemRepository saleItemRepository,
         IMapper mapper)
     {
         this.saleRepository = saleRepository;
+        this.saleItemRepository = saleItemRepository;
         this.mapper = mapper;
     }
 
@@ -43,10 +42,18 @@ public class CreateSaleHandler : IRequestHandler<CreateSaleCommand, CreateSaleRe
         }
 
         Sale sale = this.mapper.Map<Sale>(command);
-        sale.Items.ForEach(i => i.ApplyDiscountRules());
-        sale.RecalculateTotal();
-
         Sale createdSale = await this.saleRepository.CreateAsync(sale, cancellationToken);
+
+        foreach (var saleItem in createdSale.Items)
+        {
+            saleItem.ApplyDiscountRules();
+            saleItem.SaleId = createdSale.Id;
+        }
+        
+        createdSale.RecalculateTotal();
+        List<SaleItem> saleItems = this.mapper.Map<List<SaleItem>>(sale.Items);
+        await this.saleItemRepository.SaveRangeAsync(saleItems, cancellationToken);
+        
         CreateSaleResult result = this.mapper.Map<CreateSaleResult>(createdSale);
         return result;
     }

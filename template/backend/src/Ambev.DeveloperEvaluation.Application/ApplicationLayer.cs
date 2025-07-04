@@ -1,8 +1,4 @@
-﻿// <copyright file="ApplicationLayer.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
-namespace Ambev.DeveloperEvaluation.Application;
+﻿namespace Ambev.DeveloperEvaluation.Application;
 
 /// <summary>
 /// Represents the application layer of the system.

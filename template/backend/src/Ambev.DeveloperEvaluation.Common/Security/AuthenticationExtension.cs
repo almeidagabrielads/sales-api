@@ -1,7 +1,3 @@
-// <copyright file="AuthenticationExtension.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
 namespace Ambev.DeveloperEvaluation.Common.Security
 {
     using System;

@@ -1,7 +1,3 @@
-// <copyright file="CreateSaleCommand.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
 using Ambev.DeveloperEvaluation.Sales.CreateSale;
 
 namespace Ambev.DeveloperEvaluation.Application.Sales.CreateSale;

@@ -1,7 +1,3 @@
-// <copyright file="AuthenticateUserProfile.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
 namespace Ambev.DeveloperEvaluation.Application.Auth.AuthenticateUser;
 
 using Ambev.DeveloperEvaluation.Domain.Entities;
