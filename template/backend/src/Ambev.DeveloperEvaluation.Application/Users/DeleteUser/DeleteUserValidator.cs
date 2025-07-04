@@ -1,7 +1,3 @@
-// <copyright file="DeleteUserValidator.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
 namespace Ambev.DeveloperEvaluation.Application.Users.DeleteUser;
 
 using FluentValidation;

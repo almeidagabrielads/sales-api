@@ -1,8 +1,4 @@
-﻿// <copyright file="CreateUserResult.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
-namespace Ambev.DeveloperEvaluation.Application.Users.CreateUser;
+﻿namespace Ambev.DeveloperEvaluation.Application.Users.CreateUser;
 
 /// <summary>
 /// Represents the response returned after successfully creating a new user.

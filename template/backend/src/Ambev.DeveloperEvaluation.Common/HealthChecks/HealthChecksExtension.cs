@@ -1,8 +1,4 @@
-﻿// <copyright file="HealthChecksExtension.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
-namespace Ambev.DeveloperEvaluation.Common.HealthChecks;
+﻿namespace Ambev.DeveloperEvaluation.Common.HealthChecks;
 
 using System.Net.Mime;
 

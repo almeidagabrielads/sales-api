@@ -1,8 +1,4 @@
-﻿// <copyright file="20241014011203_InitialMigrations.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
-#nullable disable
+﻿#nullable disable
 
 namespace Ambev.DeveloperEvaluation.ORM.Migrations
 {

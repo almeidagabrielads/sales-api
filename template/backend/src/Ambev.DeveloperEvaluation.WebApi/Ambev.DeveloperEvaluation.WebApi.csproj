@@ -33,9 +33,8 @@
     <Folder Include="Features\Users\UpdateUser\" />
   </ItemGroup>
   
-  <ItemGroup>
-    <Content Include="$(OutputPath)Ambev.DeveloperEvaluation.WebApi.deps.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
+  <Target Name="AfterBuild">
+    <Copy SourceFiles="$(ProjectDir)bin\$(Configuration)\net8.0\$(AssemblyName).deps.json" DestinationFolder="$(PublishDir)" />
+  </Target>
+
 </Project>

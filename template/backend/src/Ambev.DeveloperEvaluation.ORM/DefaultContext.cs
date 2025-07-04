@@ -1,8 +1,4 @@
-﻿// <copyright file="DefaultContext.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
-namespace Ambev.DeveloperEvaluation.ORM;
+﻿namespace Ambev.DeveloperEvaluation.ORM;
 
 using System.Reflection;
 
@@ -21,6 +17,7 @@ public class DefaultContext : DbContext
 
     public DbSet<User> Users { get; set; }
     public DbSet<Sale> Sales { get; set; }
+    public DbSet<SaleItem> SaleItems { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

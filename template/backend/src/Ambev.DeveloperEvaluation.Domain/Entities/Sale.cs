@@ -42,4 +42,24 @@ public class Sale : BaseEntity
             Errors = result.Errors.Select(e => (ValidationErrorDetail)e),
         };
     }
+    
+    public void UpdateDetails(
+        string newSaleNumber,
+        Guid newCustomerId,
+        string newCustomerName,
+        Guid newBranchId,
+        string newBranchName,
+        List<SaleItem> newItems)
+    {
+        this.SaleNumber = newSaleNumber;
+        this.CustomerId = newCustomerId;
+        this.CustomerName = newCustomerName;
+        this.BranchId = newBranchId;
+        this.BranchName = newBranchName;
+
+        this.Items.Clear();
+        this.Items.AddRange(newItems);
+        this.Items.ForEach(i => i.ApplyDiscountRules());
+        this.RecalculateTotal();
+    }
 }

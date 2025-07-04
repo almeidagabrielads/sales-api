@@ -1,6 +1,3 @@
-// <copyright file="CreateSaleItemDto.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
 namespace Ambev.DeveloperEvaluation.Sales.CreateSale;
 
 /// <summary>

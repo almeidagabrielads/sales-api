@@ -44,7 +44,7 @@ services:
     ports:
       - "6379"
   
-  migration-runner:
+  ambev.developerevaluation.migration.runner:
     build:
       context: .
       dockerfile: DockerfileMigrations
@@ -55,5 +55,12 @@ services:
     working_dir: /app/src/Ambev.DeveloperEvaluation.ORM
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-
-
+    
+  ambev.developerevaluation.tests.functional:
+    build:
+      context: .
+      dockerfile: tests/Ambev.DeveloperEvaluation.Functional/Dockerfile
+    depends_on:
+      - ambev.developerevaluation.webapi
+    environment:
+      ASPNETCORE_URLS: http://+:80

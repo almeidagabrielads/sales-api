@@ -25,5 +25,9 @@ public class SaleItemValidator : AbstractValidator<SaleItem>
         this.RuleFor(i => i.UnitPrice)
             .GreaterThan(0)
             .WithMessage("Unit price must be greater than zero.");
+        
+        this.RuleFor(i => i.SaleId)
+            .NotEmpty()
+            .WithMessage("Sale ID cannot be empty.");
     }
 }

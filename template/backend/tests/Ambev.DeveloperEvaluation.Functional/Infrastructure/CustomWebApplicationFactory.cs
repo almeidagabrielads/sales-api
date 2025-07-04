@@ -14,14 +14,8 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
 {
     protected override IHost CreateHost(IHostBuilder builder)
     {
-        builder.UseContentRoot(GetContentRootPath());
+        builder.UseContentRoot(this.GetContentRootPath());
         return base.CreateHost(builder);
-    }
-
-    private string GetContentRootPath()
-    {
-        var relativePath = @"src/Ambev.DeveloperEvaluation.WebApi/Ambev.DeveloperEvaluation.WebApi.csproj";
-        return Path.GetFullPath(relativePath, Directory.GetCurrentDirectory());
     }
     
     protected override void ConfigureWebHost(IWebHostBuilder builder)
@@ -46,5 +40,10 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
             db.Database.EnsureCreated();
         });
     }
-    
+
+    private string GetContentRootPath()
+    {
+        var relativePath = @"src/Ambev.DeveloperEvaluation.WebApi/Ambev.DeveloperEvaluation.WebApi.csproj";
+        return Path.GetFullPath(relativePath, Directory.GetCurrentDirectory());
+    }
 }

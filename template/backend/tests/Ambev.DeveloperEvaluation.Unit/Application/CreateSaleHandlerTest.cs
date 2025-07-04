@@ -28,6 +28,7 @@ using Xunit;
 public class CreateSaleHandlerTest
 {
      private readonly ISaleRepository saleRepository;
+     private readonly ISaleItemRepository saleItemRepository;
      private readonly IMapper mapper;
      private readonly CreateSaleHandler handler;
 
@@ -38,8 +39,9 @@ public class CreateSaleHandlerTest
      public CreateSaleHandlerTest()
     {
         this.saleRepository = Substitute.For<ISaleRepository>();
+        this.saleItemRepository = Substitute.For<ISaleItemRepository>();
         this.mapper = Substitute.For<IMapper>();
-        this.handler = new CreateSaleHandler(this.saleRepository, this.mapper);
+        this.handler = new CreateSaleHandler(this.saleRepository, this.saleItemRepository, this.mapper);
     }
 
     /// <summary>

@@ -1,6 +1,4 @@
-// <copyright file="CreateSaleProfile.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
+using Ambev.DeveloperEvaluation.Sales.CreateSale;
 
 namespace Ambev.DeveloperEvaluation.Application.Sales.CreateSale;
 
@@ -19,7 +17,8 @@ public class CreateSaleProfile : Profile
     /// </summary>
     public CreateSaleProfile()
     {
-        this.CreateMap<CreateSaleCommand, Sale>()
-            .ReverseMap();
+        this.CreateMap<CreateSaleCommand, Sale>();
+        this.CreateMap<CreateSaleItemDto, SaleItem>();
+        this.CreateMap<Sale, CreateSaleResult>();
     }
 }
