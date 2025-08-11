@@ -1,0 +1,10 @@
+﻿FROM mcr.microsoft.com/dotnet/sdk:8.0
+
+WORKDIR /app
+
+COPY . .
+
+RUN dotnet restore "src/Ambev.DeveloperEvaluation.WebApi/Ambev.DeveloperEvaluation.WebApi.csproj"
+
+RUN dotnet tool install --global dotnet-ef
+ENV PATH="$PATH:/root/.dotnet/tools"
