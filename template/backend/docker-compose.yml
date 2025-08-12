@@ -59,3 +59,11 @@ services:
     working_dir: /app/src/Ambev.DeveloperEvaluation.ORM
     environment:
       - ASPNETCORE_ENVIRONMENT=Development 
+
+  ambev.developerevaluation.tests.unit:
+    container_name: ambev_developer_evaluation_tests_unit
+    build:
+      context: .
+      dockerfile: tests/Ambev.DeveloperEvaluation.Unit/DockerfileUnit
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
