@@ -1,3 +1,5 @@
+using Ambev.DeveloperEvaluation.Application.Sales.CreateSale;
+using Ambev.DeveloperEvaluation.Common.Validation;
 using MediatR;
 
 namespace Ambev.DeveloperEvaluation.Application.Sales.UpdateSale;
@@ -32,5 +34,20 @@ public class UpdateSaleCommand: IRequest<UpdateSaleResult>
     /// Gets or sets the list of items in the sale.
     /// </summary>
     public List<UpdateSaleItemDto> NewItems { get; set; } = new();
+    
+    /// <summary>
+    /// Validates the command and returns detailed validation results.
+    /// </summary>
+    /// <returns></returns>
+    public ValidationResultDetail Validate()
+    {
+        UpdateSaleCommandValidator validator = new UpdateSaleCommandValidator();
+        FluentValidation.Results.ValidationResult result = validator.Validate(this);
+        return new ValidationResultDetail
+        {
+            IsValid = result.IsValid,
+            Errors = result.Errors.Select(e => (ValidationErrorDetail)e),
+        };
+    }
     
 }
