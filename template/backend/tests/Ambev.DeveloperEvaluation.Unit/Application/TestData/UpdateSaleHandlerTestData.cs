@@ -9,7 +9,7 @@ using System.Reflection;
     /// Provides test data generation utilities for unit tests related to updating sales.
     /// Includes methods to generate valid update commands, mock Sale entities, mapped SaleItems, and result objects.
     /// </summary>
-    public class UpdateSaleHandlerTestData
+    public static class UpdateSaleHandlerTestData
     {
         /// <summary>
         /// Configures a Faker to generate valid <see cref="UpdateSaleCommand"/> instances with random but valid data.
