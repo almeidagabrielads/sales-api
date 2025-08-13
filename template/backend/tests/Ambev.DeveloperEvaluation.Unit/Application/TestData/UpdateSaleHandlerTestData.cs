@@ -1,9 +1,9 @@
 using System.Reflection;
-    using Ambev.DeveloperEvaluation.Application.Sales.UpdateSale;
-    using Ambev.DeveloperEvaluation.Domain.Entities;
-    using Bogus;
-    
-    namespace Ambev.DeveloperEvaluation.Unit.Domain;
+using Ambev.DeveloperEvaluation.Application.Sales.UpdateSale;
+using Ambev.DeveloperEvaluation.Domain.Entities;
+using Bogus;
+
+namespace Ambev.DeveloperEvaluation.Unit.Application.TestData;
     
     /// <summary>
     /// Provides test data generation utilities for unit tests related to updating sales.

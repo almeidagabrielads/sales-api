@@ -1,5 +1,5 @@
 using System.Reflection;
-using Ambev.DeveloperEvaluation.Application.Sales.GetSale;
+using Ambev.DeveloperEvaluation.Application.Sales.DeleteSale;
 using Ambev.DeveloperEvaluation.Domain.Entities;
 
 namespace Ambev.DeveloperEvaluation.Unit.Application.TestData;
@@ -9,15 +9,15 @@ namespace Ambev.DeveloperEvaluation.Unit.Application.TestData;
 /// This class centralizes all test data generation to ensure consistency
 /// across test cases and provide both valid and invalid data scenarios.
 /// </summary>
-public static class GetSaleHandlerTestData
+public static class DeleteSaleHandlerTestData
 {
     /// <summary>
-    /// Generates a valid <see cref="GetSaleCommand"/> with random data.
+    /// Generates a valid <see cref="DeleteSaleCommand"/> with random data.
     /// </summary>
-    /// <returns>A valid <see cref="GetSaleCommand"/> instance.</returns>
-    public static GetSaleCommand GenerateValidCommand()
+    /// <returns>A valid <see cref="DeleteSaleCommand"/> instance.</returns>
+    public static DeleteSaleCommand GenerateValidCommand()
     {
-        return new GetSaleCommand(Guid.NewGuid());
+        return new DeleteSaleCommand(Guid.NewGuid());
     }
 
     /// <summary>
@@ -34,17 +34,6 @@ public static class GetSaleHandlerTestData
         SetProperty(sale, nameof(Sale.Items), new List<SaleItem>());
 
         return sale;
-    }
-
-    /// <summary>
-    /// Generate a GetSaleResult return simulating the same id.
-    /// </summary>
-    public static GetSaleResult GenerateResult(Guid id)
-    {
-        return new GetSaleResult
-        {
-            Id = id
-        };
     }
 
     private static void SetProperty<T>(object obj, string propertyName, T value)
