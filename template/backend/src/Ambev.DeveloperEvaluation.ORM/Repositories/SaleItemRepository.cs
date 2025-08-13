@@ -48,5 +48,19 @@ public class SaleItemRepository: ISaleItemRepository
         await this.context.SaveChangesAsync(cancellationToken);
         return saleItems;
     }
+    
+    public async Task<bool> DeleteRangeAsync(List<SaleItem> saleItems, CancellationToken cancellationToken = default)
+    {
+        foreach (var item in saleItems)
+        {
+            if (this.context.Entry(item).State != EntityState.Detached)
+            {
+                item.Cancel();
+                this.context.SaleItems.Update(item);
+            }
+        }
 
+        await this.context.SaveChangesAsync(cancellationToken);
+        return true;
+    }
 }

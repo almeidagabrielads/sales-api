@@ -72,4 +72,27 @@ public class SaleRepository: ISaleRepository
         await this.context.SaveChangesAsync(cancellationToken);
         return sale;
     }
+    
+    /// <summary>
+    /// Asynchronously delete a sale by its unique identifier.
+    /// </summary>
+    /// <param name="id">The unique identifier of the sale.</param>
+    /// <param name="cancellationToken">Token to cancel the operation (optional).</param>
+    /// <returns>The successful status.</returns>
+    public async Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        Sale? sale = await this.context.Sales
+            .Include(s => s.Items)
+            .FirstOrDefaultAsync(s => s.Id == id, cancellationToken);
+        
+        if (sale == null)
+        {
+            return false;
+        }
+        
+        sale.Cancel();
+        this.context.Sales.Update(sale);
+        await this.context.SaveChangesAsync(cancellationToken);
+        return true;
+    }
 }

@@ -38,4 +38,13 @@ public interface ISaleRepository
    /// <param name="cancellationToken">Token to cancel the operation (optional).</param>
    /// <returns>The updated <see cref="Sale"/> entity.</returns>
    Task<Sale> UpdateAsync(Sale sale, CancellationToken cancellationToken = default);
+   
+   /// <summary>
+   /// Asynchronously delete a sale by its unique identifier.
+   /// </summary>
+   /// <param name="id">The unique identifier of the sale.</param>
+   /// <param name="cancellationToken">Token to cancel the operation (optional).</param>
+   /// <returns>The successful status.</returns>
+   Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken = default);
+
 }

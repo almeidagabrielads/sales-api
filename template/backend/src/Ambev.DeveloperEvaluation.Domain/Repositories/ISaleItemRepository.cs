@@ -14,4 +14,12 @@ public interface ISaleItemRepository
     /// <param name="cancellationToken">Token to cancel the operation (optional).</param>
     /// <returns>A list of the saved sale items.</returns>
     Task<List<SaleItem>> SaveRangeAsync(List<SaleItem> saleItems, CancellationToken cancellationToken = default);
+    /// <summary>
+    /// Asynchronously delete a list of sale items.
+    /// </summary>
+    /// <param name="saleItems">List of sale items to be saved.</param>
+    /// <param name="cancellationToken">Token to cancel the operation (optional).</param>
+    /// <returns>A success status.</returns>
+    Task<bool> DeleteRangeAsync(List<SaleItem> saleItems, CancellationToken cancellationToken = default);
+
 }

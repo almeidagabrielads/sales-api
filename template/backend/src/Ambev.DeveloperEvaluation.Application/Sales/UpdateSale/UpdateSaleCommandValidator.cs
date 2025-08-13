@@ -1,6 +1,5 @@
-using FluentValidation;
-        
         namespace Ambev.DeveloperEvaluation.Application.Sales.UpdateSale;
+        using FluentValidation;
         
         /// <summary>
         /// Validator for the <see cref="UpdateSaleCommand"/>, using FluentValidation to ensure the update sale data is correct.
