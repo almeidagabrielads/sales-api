@@ -1,6 +1,7 @@
 using Ambev.DeveloperEvaluation.Unit.Domain;
 
 using AutoMapper;
+using MediatR;
 
 namespace Ambev.DeveloperEvaluation.Unit.Application;
 
@@ -30,6 +31,7 @@ public class CreateSaleHandlerTest
      private readonly ISaleRepository saleRepository;
      private readonly ISaleItemRepository saleItemRepository;
      private readonly IMapper mapper;
+     private readonly IMediator mediator;
      private readonly CreateSaleHandler handler;
 
     /// <summary>
@@ -41,7 +43,8 @@ public class CreateSaleHandlerTest
         this.saleRepository = Substitute.For<ISaleRepository>();
         this.saleItemRepository = Substitute.For<ISaleItemRepository>();
         this.mapper = Substitute.For<IMapper>();
-        this.handler = new CreateSaleHandler(this.saleRepository, this.saleItemRepository, this.mapper);
+        this.mediator = Substitute.For<IMediator>();
+        this.handler = new CreateSaleHandler(this.saleRepository, this.saleItemRepository, this.mapper, this.mediator);
     }
 
     /// <summary>

@@ -1,3 +1,4 @@
+using Ambev.DeveloperEvaluation.Application.Sales.Events;
 using Ambev.DeveloperEvaluation.Domain.Entities;
 using Ambev.DeveloperEvaluation.Domain.Repositories;
 using AutoMapper;
@@ -11,15 +12,19 @@ public class CreateSaleHandler : IRequestHandler<CreateSaleCommand, CreateSaleRe
     private readonly ISaleRepository saleRepository;
     private readonly ISaleItemRepository saleItemRepository;
     private readonly IMapper mapper;
+    private readonly IMediator _mediator;
+
 
     public CreateSaleHandler(
         ISaleRepository saleRepository,
         ISaleItemRepository saleItemRepository,
-        IMapper mapper)
+        IMapper mapper,
+        IMediator mediator)
     {
         this.saleRepository = saleRepository;
         this.saleItemRepository = saleItemRepository;
         this.mapper = mapper;
+        this._mediator = mediator;
     }
 
     public async Task<CreateSaleResult> Handle(CreateSaleCommand command, CancellationToken cancellationToken)
@@ -50,6 +55,7 @@ public class CreateSaleHandler : IRequestHandler<CreateSaleCommand, CreateSaleRe
         createdSale.RecalculateTotal();
         List<SaleItem> saleItems = this.mapper.Map<List<SaleItem>>(sale.Items);
         await this.saleItemRepository.SaveRangeAsync(saleItems, cancellationToken);
+        await _mediator.Publish(new SaleCreatedEvent(sale.Id, sale.SaleNumber), cancellationToken);
         
         CreateSaleResult result = this.mapper.Map<CreateSaleResult>(createdSale);
         return result;
