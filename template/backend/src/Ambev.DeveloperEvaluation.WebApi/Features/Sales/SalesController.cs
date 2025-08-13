@@ -1,6 +1,8 @@
 using Ambev.DeveloperEvaluation.Application.Sales.CreateSale;
+using Ambev.DeveloperEvaluation.Application.Sales.UpdateSale;
 using Ambev.DeveloperEvaluation.WebApi.Common;
 using Ambev.DeveloperEvaluation.WebApi.Features.Sales.CreateSale;
+using Ambev.DeveloperEvaluation.WebApi.Features.Sales.UpdateSale;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -66,5 +68,42 @@ public class SalesController : BaseController
         });
     }
     
-    //TODO: UpdateSale, GetSaleById, GetAllSales, DeleteSale
+    /// <summary>
+    /// Updates sale.
+    /// </summary>
+    /// <param name="request">The sale update request.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>The update sale details.</returns>
+    [Authorize]
+    [HttpPut]
+    [ProducesResponseType(typeof(ApiResponseWithData<CreateSaleResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status401Unauthorized)]
+    public async Task<IActionResult> UpdateSale([FromBody] UpdateSaleRequest request, CancellationToken cancellationToken)
+    {
+        if (!this.User.Identity?.IsAuthenticated ?? true)
+        {
+            return this.Unauthorized();
+        }
+
+        UpdateSaleRequestValidator validator = new();
+        FluentValidation.Results.ValidationResult validationResult = await validator.ValidateAsync(request, cancellationToken);
+
+        if (!validationResult.IsValid)
+        {
+            return this.BadRequest(validationResult.Errors);
+        }
+
+        UpdateSaleCommand command = this._mapper.Map<UpdateSaleCommand>(request);
+        UpdateSaleResult response = await this._mediator.Send(command, cancellationToken);
+
+        return this.Ok(new ApiResponseWithData<UpdateSaleResponse>
+        {
+            Success = true,
+            Message = "Sale updated successfully",
+            Data = this._mapper.Map<UpdateSaleResponse>(response),
+        });
+    }
+    
+    //TODO: GetSaleById, GetAllSales, DeleteSale
 }
