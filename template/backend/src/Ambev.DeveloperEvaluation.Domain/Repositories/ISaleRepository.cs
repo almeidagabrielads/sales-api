@@ -22,4 +22,20 @@ public interface ISaleRepository
     /// <param name="cancellationToken">Token to cancel the operation (optional).</param>
     /// <returns>The <see cref="Sale"/> entity if found; otherwise, null.</returns>
     Task<Sale?> GetBySaleNumberAsync(string saleNumber, CancellationToken cancellationToken = default);    
+    
+   /// <summary>
+   /// Asynchronously retrieves a sale by its unique identifier.
+   /// </summary>
+   /// <param name="id">The unique identifier of the sale.</param>
+   /// <param name="cancellationToken">Token to cancel the operation (optional).</param>
+   /// <returns>The <see cref="Sale"/> entity if found; otherwise, null.</returns>
+   Task<Sale?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+   
+   /// <summary>
+   /// Asynchronously updates an existing sale.
+   /// </summary>
+   /// <param name="sale">The sale entity to be updated.</param>
+   /// <param name="cancellationToken">Token to cancel the operation (optional).</param>
+   /// <returns>The updated <see cref="Sale"/> entity.</returns>
+   Task<Sale> UpdateAsync(Sale sale, CancellationToken cancellationToken = default);
 }
