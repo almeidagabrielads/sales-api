@@ -64,6 +64,6 @@ services:
     container_name: ambev_developer_evaluation_tests_unit
     build:
       context: .
-      dockerfile: tests/Ambev.DeveloperEvaluation.Unit/DockerfileUnit
+      dockerfile: tests/Ambev.DeveloperEvaluation.Unit/Dockerfile
     environment:
       ASPNETCORE_ENVIRONMENT: Development

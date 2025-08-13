@@ -2,7 +2,39 @@
 
 `READ CAREFULLY`
 
-## Instructions
+## Running The Project
+
+### Clone the project
+
+```bash
+git clone https://github.com/almeidagabrielads/sales-api.git
+cd sales-api
+```
+
+### Running via Docker Compose
+```bash
+docker-compose up -d --build
+```
+
+### To disconnect and remove volumes:
+```bash
+docker-compose down -v
+```
+
+## Running Unit Tests
+
+### To run the unit test suite:
+```bash
+docker compose run --rm ambev.developerevaluation.tests.unit
+```
+
+### To run with exposed ports and interactive logs:
+```bash
+docker-compose run --rm --service-ports ambev.developerevaluation.tests.unit
+```
+
+
+## Challenge Instructions
 **The test below will have up to 7 calendar days to be delivered from the date of receipt of this manual.**
 
 - The code must be versioned in a public Github repository and a link must be sent for evaluation once completed

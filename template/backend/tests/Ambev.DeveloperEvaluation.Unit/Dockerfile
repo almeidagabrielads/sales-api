@@ -1,12 +1,12 @@
 ﻿FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+ARG BUILD_CONFIGURATION=Release
+
 WORKDIR /app
 
 COPY . .
 
-RUN dotnet restore
+RUN dotnet restore "tests/Ambev.DeveloperEvaluation.Unit/Ambev.DeveloperEvaluation.Unit.csproj"
 
-RUN dotnet build --no-restore
+RUN dotnet build "tests/Ambev.DeveloperEvaluation.Unit/Ambev.DeveloperEvaluation.Unit.csproj" -c $BUILD_CONFIGURATION --no-restore
 
-WORKDIR /app/tests/Ambev.DeveloperEvaluation.Unit
-
-ENTRYPOINT ["dotnet", "test", "--no-build", "--verbosity:normal"]
+ENTRYPOINT ["dotnet","test","tests/Ambev.DeveloperEvaluation.Unit/Ambev.DeveloperEvaluation.Unit.csproj","-c","Release","--no-build","--verbosity","normal"]
