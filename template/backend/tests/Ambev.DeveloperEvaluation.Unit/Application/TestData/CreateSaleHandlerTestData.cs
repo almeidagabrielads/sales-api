@@ -1,7 +1,7 @@
 using Ambev.DeveloperEvaluation.Application.Sales.CreateSale;
 using Bogus;
 
-namespace Ambev.DeveloperEvaluation.Unit.Domain;
+namespace Ambev.DeveloperEvaluation.Unit.Application.TestData;
 
 /// <summary>
 /// Provides test data generation utilities for <see cref="CreateSaleCommand"/> in unit tests.

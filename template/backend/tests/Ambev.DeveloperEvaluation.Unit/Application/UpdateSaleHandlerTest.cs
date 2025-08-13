@@ -1,6 +1,7 @@
 using Ambev.DeveloperEvaluation.Application.Sales.UpdateSale;
         using Ambev.DeveloperEvaluation.Domain.Entities;
         using Ambev.DeveloperEvaluation.Domain.Repositories;
+        using Ambev.DeveloperEvaluation.Unit.Application.TestData;
         using Ambev.DeveloperEvaluation.Unit.Domain;
         using AutoMapper;
         using FluentAssertions;
